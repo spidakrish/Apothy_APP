@@ -1,0 +1,300 @@
+\documentclass[11pt,a4paper]{article}
+
+% Packages
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{geometry}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{titlesec}
+\usepackage{enumitem}
+\usepackage{longtable}
+\usepackage{booktabs}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage{soul}
+
+% Page geometry
+\geometry{margin=2.5cm}
+
+% Colours
+\definecolor{apothypurple}{HTML}{8B5CF6}
+\definecolor{darkbg}{HTML}{0A0A0F}
+
+% Hyperlinks
+\hypersetup{
+    colorlinks=true,
+    linkcolor=apothypurple,
+    urlcolor=apothypurple
+}
+
+% Header/Footer
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\textbf{Apothy App Development Log}}
+\fancyhead[R]{Apothyai Pty Limited}
+\fancyfoot[C]{Page \thepage\ of \pageref{LastPage}}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+% Title formatting
+\titleformat{\section}{\Large\bfseries\color{apothypurple}}{\thesection}{1em}{}
+\titleformat{\subsection}{\large\bfseries}{\thesubsection}{1em}{}
+
+\begin{document}
+
+% Title Page
+\begin{titlepage}
+    \centering
+    \vspace*{3cm}
+
+    {\Huge\bfseries\color{apothypurple} Apothy App\\[0.5cm] Development Work Log}
+
+    \vspace{1cm}
+
+    {\Large Apothyai Pty Limited}
+
+    \vspace{2cm}
+
+    {\large
+    \begin{tabular}{ll}
+        \textbf{Project:} & Apothy AI Companion App \\
+        \textbf{Platform:} & iOS (Flutter) \\
+        \textbf{Repository:} & \url{https://github.com/spidakrish/Apothy_APP} \\
+        \textbf{Started:} & 7 December 2024 \\
+        \textbf{Bundle ID:} & com.apothyai.apothy \\
+    \end{tabular}
+    }
+
+    \vfill
+
+    {\large\textit{Born from light. Trained in truth. Built to become what you need.}}
+
+    \vspace{1cm}
+
+\end{titlepage}
+
+\tableofcontents
+\newpage
+
+% ============================================================================
+\section{Project Overview}
+% ============================================================================
+
+\subsection{Technical Stack}
+\begin{itemize}
+    \item \textbf{Framework:} Flutter 3.38.4
+    \item \textbf{Language:} Dart 3.10.3
+    \item \textbf{State Management:} Riverpod
+    \item \textbf{Local Storage:} Hive
+    \item \textbf{Backend API:} AWS Lambda (Python/FastAPI)
+    \item \textbf{Authentication:} Apple Sign-In, Google Sign-In, Email
+    \item \textbf{IDE:} VS Code / Xcode 16.3
+\end{itemize}
+
+\subsection{Design Specifications}
+\begin{itemize}
+    \item \textbf{Theme:} Dark mode with purple accents
+    \item \textbf{Primary Colour:} \texttt{\#8B5CF6} (Purple/Violet)
+    \item \textbf{Background:} \texttt{\#0A0A0F} (Near black)
+    \item \textbf{Font:} Roboto
+    \item \textbf{Navigation:} Bottom tab bar (5 tabs)
+\end{itemize}
+
+\subsection{Core Screens}
+\begin{enumerate}
+    \item Mirror (Welcome/Landing)
+    \item History (Chat history with date picker)
+    \item Chat (Main conversation interface)
+    \item Dashboard (Points, achievements, progress)
+    \item Settings (Profile, appearance, notifications)
+\end{enumerate}
+
+% ============================================================================
+\section{Development Log}
+% ============================================================================
+
+\subsection{7 December 2024}
+
+\subsubsection{Session 1: Project Initialisation}
+\begin{longtable}{p{3cm}p{11cm}}
+\toprule
+\textbf{Time} & \textbf{Activity} \\
+\midrule
+\endfirsthead
+\midrule
+\textbf{Time} & \textbf{Activity} \\
+\midrule
+\endhead
+Start & Installed CocoaPods via Homebrew \\
+& Initialised Git repository \\
+& Connected to GitHub: \url{https://github.com/spidakrish/Apothy_APP} \\
+& Created Flutter project with bundle ID \texttt{com.apothyai.apothy} \\
+& Verified iOS build (Xcode 16.3) \\
+& Initial commit and push to GitHub \\
+\bottomrule
+\end{longtable}
+
+\textbf{Outcome:} Project scaffold complete. iOS build verified working.
+
+\subsubsection{Session 2: Phase 1 --- Foundation}
+\begin{longtable}{p{3cm}p{11cm}}
+\toprule
+\textbf{Time} & \textbf{Activity} \\
+\midrule
+\endfirsthead
+\midrule
+\textbf{Time} & \textbf{Activity} \\
+\midrule
+\endhead
+Start & Created work log document (this file) \\
+& Set up folder structure (clean architecture): \\
+& \quad - \texttt{lib/core/} (constants, theme, utils, services) \\
+& \quad - \texttt{lib/features/} (auth, chat, mirror, history, dashboard, settings) \\
+& \quad - \texttt{lib/shared/} (widgets, providers) \\
+& Added dependencies to \texttt{pubspec.yaml}: \\
+& \quad - flutter\_riverpod, riverpod\_annotation (state management) \\
+& \quad - go\_router (navigation) \\
+& \quad - dio, http (networking) \\
+& \quad - sign\_in\_with\_apple, google\_sign\_in (authentication) \\
+& \quad - hive, hive\_flutter, flutter\_secure\_storage (storage) \\
+& \quad - google\_fonts, flutter\_svg, cached\_network\_image (UI) \\
+& Created theme constants: \\
+& \quad - \texttt{app\_colors.dart} --- Full colour palette \\
+& \quad - \texttt{app\_typography.dart} --- Roboto font styles \\
+& \quad - \texttt{app\_theme.dart} --- Material3 ThemeData \\
+& Created API and app constants: \\
+& \quad - \texttt{api\_constants.dart} --- Endpoint URLs \\
+& \quad - \texttt{app\_constants.dart} --- App-wide constants \\
+& Created reusable widgets: \\
+& \quad - \texttt{app\_button.dart} --- Primary/outlined/text variants \\
+& \quad - \texttt{app\_text\_field.dart} --- Input fields \& chat input \\
+& \quad - \texttt{message\_bubble.dart} --- User/assistant chat bubbles \\
+& \quad - \texttt{gradient\_background.dart} --- Purple glow backgrounds \\
+& \quad - \texttt{loading\_indicator.dart} --- Loaders \& skeletons \\
+\bottomrule
+\end{longtable}
+
+\textbf{Outcome:} Phase 1 (Foundation) complete. All theme constants, barrel files, and reusable widgets created.
+
+% ============================================================================
+\section{Architecture Decisions}
+% ============================================================================
+
+\subsection{Folder Structure}
+The project follows a feature-first clean architecture:
+
+\begin{verbatim}
+lib/
+  core/           # Shared utilities, constants, themes
+  features/       # Feature modules (auth, chat, etc.)
+  shared/         # Shared widgets and components
+  main.dart       # App entry point
+\end{verbatim}
+
+\subsection{State Management}
+Using Riverpod for state management because:
+\begin{itemize}
+    \item Compile-time safety
+    \item Provider scoping and overriding
+    \item No BuildContext dependency for reading state
+    \item Excellent testing support
+\end{itemize}
+
+% ============================================================================
+\section{API Integration}
+% ============================================================================
+
+\subsection{Endpoints}
+\begin{longtable}{p{4cm}p{10cm}}
+\toprule
+\textbf{Environment} & \textbf{URL} \\
+\midrule
+Production & \texttt{https://xnfhbfcbpptm6bqdvs5gi6gimu0xiguq.lambda-url.ap-southeast-2.on.aws} \\
+Staging & \texttt{https://api-staging.apothy.ai} \\
+Local & \texttt{http://localhost:8000} \\
+\bottomrule
+\end{longtable}
+
+% ============================================================================
+\section{Issues and Resolutions}
+% ============================================================================
+
+\subsection{Issue 1: Deprecated \texttt{withOpacity} API}
+\textbf{Problem:} Flutter 3.27+ deprecated \texttt{Color.withOpacity()} in favour of \texttt{Color.withValues(alpha: x)}.
+
+\textbf{Solution:} Updated all 8 occurrences across 6 files to use the new API.
+
+\textbf{Files affected:}
+\begin{itemize}
+    \item \texttt{lib/core/theme/app\_colors.dart}
+    \item \texttt{lib/core/theme/app\_theme.dart}
+    \item \texttt{lib/shared/widgets/app\_button.dart}
+    \item \texttt{lib/shared/widgets/message\_bubble.dart}
+    \item \texttt{lib/shared/widgets/gradient\_background.dart}
+    \item \texttt{lib/shared/widgets/loading\_indicator.dart}
+\end{itemize}
+
+\subsection{Issue 2: Theme class naming changes}
+\textbf{Problem:} Flutter 3.38 renamed \texttt{CardTheme} to \texttt{CardThemeData} and \texttt{DialogTheme} to \texttt{DialogThemeData}.
+
+\textbf{Solution:} Updated \texttt{lib/core/theme/app\_theme.dart} to use the new class names.
+
+\subsection{Issue 3: Dangling library doc comments}
+\textbf{Problem:} Barrel files with doc comments but no \texttt{library;} directive triggered linter warnings.
+
+\textbf{Solution:} Added \texttt{library;} directive to all 5 barrel files.
+
+\subsection{Issue 4: Dependency version conflict}
+\textbf{Problem:} \texttt{riverpod\_generator \^{}2.6.2} conflicted with \texttt{hive\_generator \^{}2.0.1} due to incompatible \texttt{analyzer} requirements.
+
+\textbf{Solution:} Downgraded \texttt{riverpod\_generator} to \texttt{\^{}2.4.0} as recommended by the Flutter tooling.
+
+\subsubsection{Session 3: Phase 2 --- Navigation Shell}
+\begin{longtable}{p{3cm}p{11cm}}
+\toprule
+\textbf{Time} & \textbf{Activity} \\
+\midrule
+\endfirsthead
+\midrule
+\textbf{Time} & \textbf{Activity} \\
+\midrule
+\endhead
+Start & Researched \texttt{go\_router} \texttt{StatefulShellRoute} pattern \\
+& Verified implementation approach from official documentation \\
+& Created router configuration: \\
+& \quad - \texttt{lib/core/router/app\_router.dart} --- Route definitions \\
+& \quad - \texttt{lib/core/router/navigation\_shell.dart} --- Bottom nav bar \\
+& \quad - \texttt{lib/core/router/router.dart} --- Barrel file \\
+& Created placeholder screens for all 5 tabs: \\
+& \quad - \texttt{mirror\_screen.dart} --- Welcome/landing page \\
+& \quad - \texttt{history\_screen.dart} --- Chat history \\
+& \quad - \texttt{chat\_screen.dart} --- Main conversation interface \\
+& \quad - \texttt{dashboard\_screen.dart} --- Points and achievements \\
+& \quad - \texttt{settings\_screen.dart} --- App preferences \\
+& Updated \texttt{main.dart}: \\
+& \quad - Added Riverpod \texttt{ProviderScope} \\
+& \quad - Integrated \texttt{MaterialApp.router} with \texttt{appRouter} \\
+& \quad - Set system UI overlay styles for dark theme \\
+& Updated test file to work with new structure \\
+& Verified iOS build succeeded \\
+\bottomrule
+\end{longtable}
+
+\textbf{Outcome:} Phase 2 (Navigation Shell) complete. App builds and runs with 5-tab bottom navigation.
+
+% ============================================================================
+\section{Future Work}
+% ============================================================================
+
+\begin{enumerate}
+    \item \sout{Phase 1: Foundation (theme, constants, widgets)} --- Complete
+    \item \sout{Phase 2: Navigation shell (bottom tab bar)} --- Complete
+    \item Phase 3: Authentication (Apple, Google, Email)
+    \item Phase 4: Core chat experience
+    \item Phase 5: Supporting screens (Mirror, History, Dashboard, Settings)
+    \item Phase 6: Testing and polish
+    \item Phase 7: App Store submission
+\end{enumerate}
+
+\end{document}
