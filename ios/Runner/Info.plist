@@ -47,6 +47,14 @@
 	<true/>
 
 	<!-- =================================================================== -->
+	<!-- SPEECH RECOGNITION PERMISSIONS                                       -->
+	<!-- =================================================================== -->
+	<key>NSSpeechRecognitionUsageDescription</key>
+	<string>Apothy uses speech recognition to let you speak your thoughts instead of typing. Your voice is processed on-device for privacy.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Apothy needs microphone access to hear your voice when you use speech-to-text.</string>
+
+	<!-- =================================================================== -->
 	<!-- GOOGLE SIGN-IN CONFIGURATION - PLACEHOLDER VALUES                   -->
 	<!-- Replace YOUR_IOS_CLIENT_ID with actual value from Google Console    -->
 	<!-- =================================================================== -->

@@ -19,7 +19,7 @@ class DashboardScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
+              Text(
                 'Dashboard',
                 style: AppTypography.headlineLarge,
               ),
@@ -60,7 +60,7 @@ class DashboardScreen extends StatelessWidget {
               const SizedBox(height: 32),
 
               // Achievements Section
-              const Text(
+              Text(
                 'Achievements',
                 style: AppTypography.headlineSmall,
               ),

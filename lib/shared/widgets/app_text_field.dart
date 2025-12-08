@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_typography.dart';
+import '../../core/services/haptic_service.dart';
 
 /// Reusable text field widget matching Apothy design system
 class AppTextField extends StatelessWidget {
@@ -189,7 +190,8 @@ class AppTextField extends StatelessWidget {
   }
 }
 
-/// Specialized chat input field with send button
+/// Specialized chat input field with send button and optional mic button
+/// Follows Apple HIG with 44pt minimum touch targets and haptic feedback
 class ChatInputField extends StatelessWidget {
   const ChatInputField({
     super.key,
@@ -198,6 +200,8 @@ class ChatInputField extends StatelessWidget {
     this.hintText = 'Type a message...',
     this.enabled = true,
     this.focusNode,
+    this.onMicTap,
+    this.isListening = false,
   });
 
   /// Text editing controller
@@ -215,17 +219,62 @@ class ChatInputField extends StatelessWidget {
   /// Focus node
   final FocusNode? focusNode;
 
+  /// Called when user taps the mic button (null to hide mic button)
+  final VoidCallback? onMicTap;
+
+  /// Whether the mic is currently listening
+  final bool isListening;
+
+  void _handleMicTap() {
+    HapticService.toggle();
+    onMicTap?.call();
+  }
+
+  void _handleSend() {
+    HapticService.buttonTap();
+    onSend();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      // HIG: Ensure comfortable input height
+      constraints: const BoxConstraints(minHeight: 48),
+      padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 4),
       decoration: BoxDecoration(
         color: AppColors.inputBackground,
         borderRadius: BorderRadius.circular(28),
         border: Border.all(color: AppColors.borderSubtle),
       ),
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.end,
         children: [
+          // Mic button (optional) - HIG: 44pt minimum touch target
+          if (onMicTap != null)
+            SizedBox(
+              width: 44,
+              height: 44,
+              child: IconButton(
+                onPressed: enabled ? _handleMicTap : null,
+                padding: EdgeInsets.zero,
+                icon: AnimatedContainer(
+                  duration: const Duration(milliseconds: 200),
+                  width: 40,
+                  height: 40,
+                  decoration: BoxDecoration(
+                    color: isListening
+                        ? AppColors.error.withValues(alpha: 0.2)
+                        : Colors.transparent,
+                    shape: BoxShape.circle,
+                  ),
+                  child: Icon(
+                    isListening ? Icons.mic : Icons.mic_none,
+                    color: isListening ? AppColors.error : AppColors.textSecondary,
+                    size: 24,
+                  ),
+                ),
+              ),
+            ),
           Expanded(
             child: TextField(
               controller: controller,
@@ -238,29 +287,38 @@ class ChatInputField extends StatelessWidget {
               ),
               cursorColor: AppColors.primary,
               decoration: InputDecoration(
-                hintText: hintText,
-                hintStyle: AppTypography.inputPlaceholder,
+                hintText: isListening ? 'Listening...' : hintText,
+                hintStyle: AppTypography.inputPlaceholder.copyWith(
+                  color: isListening ? AppColors.error : null,
+                ),
                 border: InputBorder.none,
                 contentPadding: const EdgeInsets.symmetric(
                   horizontal: 12,
-                  vertical: 10,
+                  vertical: 12,
                 ),
               ),
-              onSubmitted: (_) => onSend(),
+              onSubmitted: (_) => _handleSend(),
             ),
           ),
-          IconButton(
-            onPressed: enabled ? onSend : null,
-            icon: Container(
-              padding: const EdgeInsets.all(8),
-              decoration: const BoxDecoration(
-                color: AppColors.primary,
-                shape: BoxShape.circle,
-              ),
-              child: const Icon(
-                Icons.arrow_upward,
-                color: AppColors.textPrimary,
-                size: 20,
+          // Send button - HIG: 44pt minimum touch target
+          SizedBox(
+            width: 44,
+            height: 44,
+            child: IconButton(
+              onPressed: enabled ? _handleSend : null,
+              padding: EdgeInsets.zero,
+              icon: Container(
+                width: 36,
+                height: 36,
+                decoration: const BoxDecoration(
+                  color: AppColors.primary,
+                  shape: BoxShape.circle,
+                ),
+                child: const Icon(
+                  Icons.arrow_upward,
+                  color: AppColors.textPrimary,
+                  size: 20,
+                ),
               ),
             ),
           ),

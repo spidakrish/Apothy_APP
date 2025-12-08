@@ -29,7 +29,7 @@ class SettingsScreen extends ConsumerWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
+              Text(
                 'Settings',
                 style: AppTypography.headlineLarge,
               ),
@@ -225,7 +225,7 @@ class SettingsScreen extends ConsumerWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Text('Account', style: AppTypography.headlineSmall),
+                    Text('Account', style: AppTypography.headlineSmall),
                     IconButton(
                       onPressed: () => Navigator.pop(context),
                       icon: const Icon(Icons.close),
@@ -329,7 +329,7 @@ class SettingsScreen extends ConsumerWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text('Choose Avatar', style: AppTypography.headlineSmall),
+                  Text('Choose Avatar', style: AppTypography.headlineSmall),
                   IconButton(
                     onPressed: () => Navigator.pop(context),
                     icon: const Icon(Icons.close),
@@ -395,7 +395,7 @@ class SettingsScreen extends ConsumerWidget {
       context: context,
       builder: (context) => AlertDialog(
         backgroundColor: AppColors.surface,
-        title: const Text('Edit Display Name', style: AppTypography.headlineSmall),
+        title: Text('Edit Display Name', style: AppTypography.headlineSmall),
         content: TextField(
           controller: controller,
           autofocus: true,
@@ -512,7 +512,7 @@ class SettingsScreen extends ConsumerWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text('Notifications', style: AppTypography.headlineSmall),
+                        Text('Notifications', style: AppTypography.headlineSmall),
                         IconButton(
                           onPressed: () => Navigator.pop(context),
                           icon: const Icon(Icons.close),
@@ -630,7 +630,7 @@ class SettingsScreen extends ConsumerWidget {
       context: context,
       builder: (context) => AlertDialog(
         backgroundColor: AppColors.surface,
-        title: const Text('Theme', style: AppTypography.headlineSmall),
+        title: Text('Theme', style: AppTypography.headlineSmall),
         content: Text(
           'Apothy currently supports dark mode only. '
           'Light mode and additional themes may be added in future updates.',
@@ -661,7 +661,7 @@ class SettingsScreen extends ConsumerWidget {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text('Text Size', style: AppTypography.headlineSmall),
+            Text('Text Size', style: AppTypography.headlineSmall),
             const SizedBox(height: 8),
             Text(
               'Choose your preferred text size',
@@ -717,7 +717,7 @@ class SettingsScreen extends ConsumerWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text('Content Preferences', style: AppTypography.headlineSmall),
+                        Text('Content Preferences', style: AppTypography.headlineSmall),
                         IconButton(
                           onPressed: () => Navigator.pop(context),
                           icon: const Icon(Icons.close),
@@ -853,7 +853,7 @@ class SettingsScreen extends ConsumerWidget {
       context: context,
       builder: (context) => AlertDialog(
         backgroundColor: AppColors.surface,
-        title: const Text('Privacy', style: AppTypography.headlineSmall),
+        title: Text('Privacy', style: AppTypography.headlineSmall),
         content: Text(
           'Your data is stored securely on your device. '
           'Conversations are processed to provide personalized responses '
@@ -879,7 +879,7 @@ class SettingsScreen extends ConsumerWidget {
       context: context,
       builder: (context) => AlertDialog(
         backgroundColor: AppColors.surface,
-        title: const Text('Clear Chat History', style: AppTypography.headlineSmall),
+        title: Text('Clear Chat History', style: AppTypography.headlineSmall),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -951,7 +951,7 @@ class SettingsScreen extends ConsumerWidget {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text('Advanced Data Management', style: AppTypography.headlineSmall),
+            Text('Advanced Data Management', style: AppTypography.headlineSmall),
             const SizedBox(height: 8),
             Text(
               'These actions are irreversible.',
@@ -1047,7 +1047,7 @@ class SettingsScreen extends ConsumerWidget {
           children: [
             Icon(Icons.warning_amber_rounded, color: AppColors.error, size: 28),
             const SizedBox(width: 12),
-            const Text('Are you sure?', style: AppTypography.headlineSmall),
+            Text('Are you sure?', style: AppTypography.headlineSmall),
           ],
         ),
         content: Text(
@@ -1179,7 +1179,7 @@ class SettingsScreen extends ConsumerWidget {
       context: context,
       builder: (context) => AlertDialog(
         backgroundColor: AppColors.surface,
-        title: const Text('Final Confirmation', style: AppTypography.headlineSmall),
+        title: Text('Final Confirmation', style: AppTypography.headlineSmall),
         content: Text(
           'Deleting your account erases all cloud data and unlinks all devices. '
           'This action cannot be undone.\n\n'
@@ -1259,7 +1259,7 @@ class SettingsScreen extends ConsumerWidget {
               ),
             ),
             const SizedBox(width: 12),
-            const Text('Apothy', style: AppTypography.headlineSmall),
+            Text('Apothy', style: AppTypography.headlineSmall),
           ],
         ),
         content: Column(
@@ -1293,7 +1293,7 @@ class SettingsScreen extends ConsumerWidget {
       context: context,
       builder: (context) => AlertDialog(
         backgroundColor: AppColors.surface,
-        title: const Text('Terms of Service', style: AppTypography.headlineSmall),
+        title: Text('Terms of Service', style: AppTypography.headlineSmall),
         content: SingleChildScrollView(
           child: Text(
             'TERMS OF SERVICE\n\n'
@@ -1329,7 +1329,7 @@ class SettingsScreen extends ConsumerWidget {
       context: context,
       builder: (context) => AlertDialog(
         backgroundColor: AppColors.surface,
-        title: const Text('Privacy Policy', style: AppTypography.headlineSmall),
+        title: Text('Privacy Policy', style: AppTypography.headlineSmall),
         content: SingleChildScrollView(
           child: Text(
             'PRIVACY POLICY\n\n'
@@ -1366,7 +1366,7 @@ class SettingsScreen extends ConsumerWidget {
       context: context,
       builder: (context) => AlertDialog(
         backgroundColor: AppColors.surface,
-        title: const Text('Sign Out', style: AppTypography.headlineSmall),
+        title: Text('Sign Out', style: AppTypography.headlineSmall),
         content: Text(
           'Are you sure you want to sign out?',
           style: AppTypography.bodyMedium.copyWith(color: AppColors.textSecondary),

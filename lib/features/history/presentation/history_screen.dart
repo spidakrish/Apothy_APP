@@ -22,7 +22,7 @@ class HistoryScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
+                  Text(
                     'History',
                     style: AppTypography.headlineLarge,
                   ),

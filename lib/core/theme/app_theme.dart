@@ -8,11 +8,14 @@ class AppTheme {
   AppTheme._();
 
   /// Dark theme (primary theme for Apothy)
+  /// Typography uses platform-native fonts: SF Pro on iOS, Roboto on Android
+  /// Each text style specifies its own font family for proper SF Pro Text/Display switching
   static ThemeData get darkTheme {
     return ThemeData(
       useMaterial3: true,
       brightness: Brightness.dark,
-      fontFamily: AppTypography.fontFamily,
+      // Note: fontFamily is NOT set here because each text style in AppTypography
+      // specifies its own font (CupertinoSystemText or CupertinoSystemDisplay on iOS)
 
       // Colour scheme
       colorScheme: const ColorScheme.dark(
@@ -29,18 +32,18 @@ class AppTheme {
       // Scaffold
       scaffoldBackgroundColor: AppColors.background,
 
-      // App bar
-      appBarTheme: const AppBarTheme(
+      // App bar - iOS style
+      appBarTheme: AppBarTheme(
         backgroundColor: AppColors.background,
         elevation: 0,
         centerTitle: true,
         systemOverlayStyle: SystemUiOverlayStyle.light,
         titleTextStyle: AppTypography.headlineMedium,
-        iconTheme: IconThemeData(color: AppColors.textPrimary),
+        iconTheme: const IconThemeData(color: AppColors.textPrimary),
       ),
 
-      // Bottom navigation bar
-      bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+      // Bottom navigation bar - iOS style
+      bottomNavigationBarTheme: BottomNavigationBarThemeData(
         backgroundColor: AppColors.navBarBackground,
         selectedItemColor: AppColors.navBarActive,
         unselectedItemColor: AppColors.navBarInactive,
@@ -132,8 +135,8 @@ class AppTheme {
         thickness: 1,
       ),
 
-      // Text theme
-      textTheme: const TextTheme(
+      // Text theme - uses getters for platform-aware fonts
+      textTheme: TextTheme(
         displayLarge: AppTypography.displayLarge,
         displayMedium: AppTypography.displayMedium,
         displaySmall: AppTypography.displaySmall,
@@ -158,11 +161,11 @@ class AppTheme {
         behavior: SnackBarBehavior.floating,
       ),
 
-      // Dialog
+      // Dialog - iOS style rounded corners
       dialogTheme: DialogThemeData(
         backgroundColor: AppColors.surface,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(14), // iOS standard
         ),
         titleTextStyle: AppTypography.headlineSmall,
         contentTextStyle: AppTypography.bodyMedium,

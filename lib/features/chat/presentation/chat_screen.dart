@@ -1,22 +1,33 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_typography.dart';
 import '../../../shared/widgets/gradient_background.dart';
 import '../../../shared/widgets/app_text_field.dart';
+import '../../speech/presentation/providers/speech_providers.dart';
 
 /// Chat screen - Main conversation interface
 /// This is the primary screen where users interact with Apothy
-class ChatScreen extends StatefulWidget {
+class ChatScreen extends ConsumerStatefulWidget {
   const ChatScreen({super.key});
 
   @override
-  State<ChatScreen> createState() => _ChatScreenState();
+  ConsumerState<ChatScreen> createState() => _ChatScreenState();
 }
 
-class _ChatScreenState extends State<ChatScreen> {
+class _ChatScreenState extends ConsumerState<ChatScreen> {
   final _messageController = TextEditingController();
   final _scrollController = ScrollController();
+
+  @override
+  void initState() {
+    super.initState();
+    // Initialize speech recognition
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref.read(speechProvider.notifier).initialize();
+    });
+  }
 
   @override
   void dispose() {
@@ -33,8 +44,34 @@ class _ChatScreenState extends State<ChatScreen> {
     _messageController.clear();
   }
 
+  void _toggleSpeechRecognition() {
+    final notifier = ref.read(speechProvider.notifier);
+    final state = ref.read(speechProvider);
+
+    if (state.isListening) {
+      notifier.stopListening();
+    } else {
+      notifier.startListening();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    // Listen to speech state changes
+    final speechState = ref.watch(speechProvider);
+
+    // Update text field when speech is recognized
+    ref.listen<SpeechState>(speechProvider, (previous, next) {
+      if (next.recognizedText.isNotEmpty &&
+          next.recognizedText != previous?.recognizedText) {
+        _messageController.text = next.recognizedText;
+        // Move cursor to end
+        _messageController.selection = TextSelection.fromPosition(
+          TextPosition(offset: _messageController.text.length),
+        );
+      }
+    });
+
     return GradientBackground(
       glowPosition: Alignment.topCenter,
       glowIntensity: 0.2,
@@ -65,7 +102,7 @@ class _ChatScreenState extends State<ChatScreen> {
                     ),
                   ),
                   const SizedBox(width: 12),
-                  const Expanded(
+                  Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -73,7 +110,7 @@ class _ChatScreenState extends State<ChatScreen> {
                           'Apothy',
                           style: AppTypography.headlineSmall,
                         ),
-                        Text(
+                        const Text(
                           'Online',
                           style: TextStyle(
                             fontSize: 12,
@@ -132,7 +169,7 @@ class _ChatScreenState extends State<ChatScreen> {
                         ),
                       ),
                       const SizedBox(height: 24),
-                      const Text(
+                      Text(
                         'How can I help you today?',
                         style: AppTypography.headlineSmall,
                         textAlign: TextAlign.center,
@@ -167,6 +204,8 @@ class _ChatScreenState extends State<ChatScreen> {
                 controller: _messageController,
                 onSend: _sendMessage,
                 hintText: 'Message Apothy...',
+                onMicTap: _toggleSpeechRecognition,
+                isListening: speechState.isListening,
               ),
             ),
           ],
