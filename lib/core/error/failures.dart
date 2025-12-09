@@ -244,3 +244,59 @@ class ChatFailure extends Failure {
     code: 'unknown',
   );
 }
+
+/// Failure related to AI chat operations
+class AIFailure extends Failure {
+  const AIFailure({
+    required super.message,
+    super.code,
+  });
+
+  /// AI response timed out
+  factory AIFailure.timeout() => const AIFailure(
+    message: 'AI response timed out. Please try again.',
+    code: 'ai_timeout',
+  );
+
+  /// Rate limited by AI service
+  factory AIFailure.rateLimited() => const AIFailure(
+    message: 'Too many requests. Please wait a moment and try again.',
+    code: 'ai_rate_limited',
+  );
+
+  /// Invalid response from AI service
+  factory AIFailure.invalidResponse() => const AIFailure(
+    message: 'Received an invalid response from AI. Please try again.',
+    code: 'ai_invalid_response',
+  );
+
+  /// AI service unavailable
+  factory AIFailure.serviceUnavailable() => const AIFailure(
+    message: 'AI service is currently unavailable. Please try again later.',
+    code: 'ai_service_unavailable',
+  );
+
+  /// AI API key invalid or missing
+  factory AIFailure.authenticationFailed() => const AIFailure(
+    message: 'AI authentication failed. Please check your configuration.',
+    code: 'ai_auth_failed',
+  );
+
+  /// Content moderation blocked the response
+  factory AIFailure.contentBlocked() => const AIFailure(
+    message: 'This message could not be processed. Please try rephrasing.',
+    code: 'ai_content_blocked',
+  );
+
+  /// Context too long for AI to process
+  factory AIFailure.contextTooLong() => const AIFailure(
+    message: 'Conversation is too long. Please start a new conversation.',
+    code: 'ai_context_too_long',
+  );
+
+  /// Generic AI failure
+  factory AIFailure.unknown([String? message]) => AIFailure(
+    message: message ?? 'An error occurred while getting AI response',
+    code: 'ai_unknown',
+  );
+}

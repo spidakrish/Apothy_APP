@@ -2,11 +2,13 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/error/failures.dart';
+import '../../../../core/services/ai_service.dart';
 import '../../data/datasources/chat_local_datasource.dart';
 import '../../data/repositories/chat_repository_impl.dart';
 import '../../domain/entities/conversation.dart';
 import '../../domain/entities/message.dart';
 import '../../domain/repositories/chat_repository.dart';
+import 'ai_providers.dart';
 
 // =============================================================================
 // Datasource Providers
@@ -144,7 +146,7 @@ class ChatNotifier extends AsyncNotifier<ChatState> {
     );
   }
 
-  /// Sends a user message
+  /// Sends a user message and requests AI response
   Future<void> sendMessage(String content) async {
     final currentState = state.valueOrNull;
     if (currentState == null) return;
@@ -173,11 +175,62 @@ class ChatNotifier extends AsyncNotifier<ChatState> {
         final updatedMessages = [...currentState.messages, message];
         state = AsyncValue.data(currentState.copyWith(
           messages: updatedMessages,
-          isSending: false,
+          // Keep isSending true while waiting for AI response
+          isSending: true,
         ));
 
         // Update conversation metadata
         _updateConversationMetadata(message);
+
+        // Request AI response
+        _getAIResponse(content, updatedMessages);
+      },
+    );
+  }
+
+  /// Gets AI response for the user's message
+  Future<void> _getAIResponse(String userMessage, List<Message> currentMessages) async {
+    final currentState = state.valueOrNull;
+    if (currentState == null) return;
+
+    // Get AI service and style preference
+    final aiService = ref.read(aiServiceProvider);
+    final style = ref.read(aiResponseStyleProvider);
+
+    // Convert messages to AI format
+    final conversationHistory = currentMessages
+        .map((m) => AIMessage(
+              role: m.isUser ? 'user' : 'assistant',
+              content: m.content,
+            ))
+        .toList();
+
+    debugPrint('ChatNotifier: Requesting AI response...');
+
+    // Request AI response
+    final aiResult = await aiService.getResponse(
+      conversationId: currentState.currentConversation.id,
+      userMessage: userMessage,
+      conversationHistory: conversationHistory,
+      style: style,
+    );
+
+    aiResult.fold(
+      (failure) {
+        debugPrint('ChatNotifier: AI response failed - ${failure.message}');
+        // Update state with failure but keep messages
+        final updatedState = state.valueOrNull;
+        if (updatedState != null) {
+          state = AsyncValue.data(updatedState.copyWith(
+            isSending: false,
+            failure: failure,
+          ));
+        }
+      },
+      (aiResponse) {
+        debugPrint('ChatNotifier: AI response received successfully');
+        // Add AI response as assistant message
+        addAssistantMessage(aiResponse.content);
       },
     );
   }
@@ -215,11 +268,19 @@ class ChatNotifier extends AsyncNotifier<ChatState> {
 
     result.fold(
       (failure) {
-        state = AsyncValue.data(currentState.copyWith(failure: failure));
+        state = AsyncValue.data(currentState.copyWith(
+          isSending: false,
+          failure: failure,
+        ));
       },
       (message) {
-        final updatedMessages = [...currentState.messages, message];
-        state = AsyncValue.data(currentState.copyWith(messages: updatedMessages));
+        // Get latest state to include any recent updates
+        final latestState = state.valueOrNull ?? currentState;
+        final updatedMessages = [...latestState.messages, message];
+        state = AsyncValue.data(latestState.copyWith(
+          messages: updatedMessages,
+          isSending: false, // Clear sending state after AI response
+        ));
         _updateConversationMetadata(message);
       },
     );

@@ -61,6 +61,34 @@ class ApiConstants {
   static const String payments = '/payments';
 
   // ============================================================================
+  // AI Chat Endpoints
+  // ============================================================================
+
+  /// Send message to AI and get response
+  /// POST: Send user message with conversation history
+  /// Expected request body:
+  /// {
+  ///   "conversation_id": "string",
+  ///   "message": "string",
+  ///   "history": [{"role": "user|assistant", "content": "string"}],
+  ///   "style": "balanced|creative|precise" (optional)
+  /// }
+  /// Expected response:
+  /// {
+  ///   "response": "string",
+  ///   "conversation_id": "string"
+  /// }
+  static const String aiChat = '/ai/chat';
+
+  /// Stream AI response (for real-time typing effect)
+  /// GET with SSE (Server-Sent Events)
+  static const String aiChatStream = '/ai/chat/stream';
+
+  /// Get AI conversation context/summary
+  static String aiConversationContext(String conversationId) =>
+      '/ai/conversations/$conversationId/context';
+
+  // ============================================================================
   // Timeouts
   // ============================================================================
 
@@ -72,4 +100,7 @@ class ApiConstants {
 
   /// Streaming timeout in seconds (for chat responses)
   static const int streamingTimeout = 120;
+
+  /// AI response timeout in seconds (longer for complex responses)
+  static const int aiResponseTimeout = 90;
 }
