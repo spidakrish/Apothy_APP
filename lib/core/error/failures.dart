@@ -188,3 +188,59 @@ class ValidationFailure extends Failure {
   @override
   List<Object?> get props => [...super.props, field];
 }
+
+/// Failure related to chat operations
+class ChatFailure extends Failure {
+  const ChatFailure({
+    required super.message,
+    super.code,
+  });
+
+  /// Failed to save message or conversation
+  factory ChatFailure.saveFailed([String? details]) => ChatFailure(
+    message: details ?? 'Failed to save chat data',
+    code: 'save_failed',
+  );
+
+  /// Failed to load messages or conversations
+  factory ChatFailure.loadFailed([String? details]) => ChatFailure(
+    message: details ?? 'Failed to load chat data',
+    code: 'load_failed',
+  );
+
+  /// Failed to delete message or conversation
+  factory ChatFailure.deleteFailed([String? details]) => ChatFailure(
+    message: details ?? 'Failed to delete chat data',
+    code: 'delete_failed',
+  );
+
+  /// Failed to create conversation
+  factory ChatFailure.createConversationFailed([String? details]) => ChatFailure(
+    message: details ?? 'Failed to create conversation',
+    code: 'create_conversation_failed',
+  );
+
+  /// Conversation not found
+  factory ChatFailure.conversationNotFound() => const ChatFailure(
+    message: 'Conversation not found',
+    code: 'conversation_not_found',
+  );
+
+  /// Message not found
+  factory ChatFailure.messageNotFound() => const ChatFailure(
+    message: 'Message not found',
+    code: 'message_not_found',
+  );
+
+  /// Storage not initialized
+  factory ChatFailure.notInitialized() => const ChatFailure(
+    message: 'Chat storage not initialized',
+    code: 'not_initialized',
+  );
+
+  /// Generic chat failure
+  factory ChatFailure.unknown([String? message]) => ChatFailure(
+    message: message ?? 'An error occurred in chat',
+    code: 'unknown',
+  );
+}

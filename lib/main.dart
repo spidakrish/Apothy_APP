@@ -1,14 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'core/router/app_router.dart';
 import 'core/theme/app_theme.dart';
+import 'features/chat/data/models/conversation_model.dart';
+import 'features/chat/data/models/message_model.dart';
 import 'features/settings/presentation/providers/settings_providers.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  // Initialize Hive for local storage
+  await Hive.initFlutter();
+
+  // Register Hive TypeAdapters for chat persistence
+  // Must be registered before opening any boxes
+  Hive.registerAdapter(MessageSenderHiveAdapter());
+  Hive.registerAdapter(MessageModelAdapter());
+  Hive.registerAdapter(ConversationModelAdapter());
 
   // Initialize SharedPreferences
   final sharedPreferences = await SharedPreferences.getInstance();
