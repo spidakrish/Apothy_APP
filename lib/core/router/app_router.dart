@@ -8,8 +8,18 @@ import '../../features/auth/presentation/screens/onboarding_screen.dart';
 import '../../features/auth/presentation/screens/signup_screen.dart';
 import '../../features/chat/presentation/chat_screen.dart';
 import '../../features/dashboard/presentation/dashboard_screen.dart';
+import '../../features/emotion_challenge/domain/entities/emotion.dart';
+import '../../features/emotion_challenge/presentation/screens/body_mapping_screen.dart';
+import '../../features/emotion_challenge/presentation/screens/cognitive_reframe_screen.dart';
+import '../../features/emotion_challenge/presentation/screens/emotion_compass_screen.dart';
+import '../../features/emotion_challenge/presentation/screens/emotion_challenge_detail_screen.dart';
+import '../../features/emotion_challenge/presentation/screens/emotion_challenge_history_screen.dart';
+import '../../features/emotion_challenge/presentation/screens/reflection_screen.dart';
+import '../../features/emotion_challenge/presentation/screens/somatic_scan_screen.dart';
+import '../../features/emotion_challenge/presentation/widgets/body_map.dart';
 import '../../features/history/presentation/history_screen.dart';
 import '../../features/mirror/presentation/mirror_screen.dart';
+import '../../features/mirror/presentation/screens/mirror_intro_screen.dart';
 import '../../features/settings/presentation/settings_screen.dart';
 import 'navigation_shell.dart';
 
@@ -24,10 +34,22 @@ class AppRoutes {
 
   // Main app routes
   static const String mirror = '/mirror';
+  static const String mirrorIntro = '/mirror-intro';
   static const String history = '/history';
   static const String chat = '/chat';
   static const String dashboard = '/dashboard';
   static const String settings = '/settings';
+
+  // Feature routes (full-screen experiences)
+  static const String emotionChallenge = '/emotion-challenge';
+  static const String bodyMapping = '/body-mapping';
+  static const String somaticScan = '/somatic-scan';
+  static const String cognitiveReframe = '/cognitive-reframe';
+  static const String reflection = '/reflection';
+
+  // Emotion Challenge History routes
+  static const String emotionChallengeHistory = '/emotion-challenge-history';
+  static const String emotionChallengeDetail = '/emotion-challenge-detail';
 }
 
 /// Navigator keys for each shell branch
@@ -136,6 +158,101 @@ final appRouterProvider = Provider<GoRouter>((ref) {
         pageBuilder: (context, state) => const MaterialPage(
           child: SignUpScreen(),
         ),
+      ),
+
+      // Mirror introduction flow
+      GoRoute(
+        path: AppRoutes.mirrorIntro,
+        parentNavigatorKey: _rootNavigatorKey,
+        pageBuilder: (context, state) => const MaterialPage(
+          child: MirrorIntroScreen(),
+        ),
+      ),
+
+      // Feature routes (full-screen experiences outside shell)
+      GoRoute(
+        path: AppRoutes.emotionChallenge,
+        parentNavigatorKey: _rootNavigatorKey,
+        pageBuilder: (context, state) => const MaterialPage(
+          child: EmotionCompassScreen(),
+        ),
+      ),
+      GoRoute(
+        path: AppRoutes.bodyMapping,
+        parentNavigatorKey: _rootNavigatorKey,
+        pageBuilder: (context, state) {
+          final extra = state.extra as Map<String, dynamic>;
+          final emotion = extra['emotion'] as Emotion;
+          return MaterialPage(
+            child: BodyMappingScreen(emotion: emotion),
+          );
+        },
+      ),
+      GoRoute(
+        path: AppRoutes.somaticScan,
+        parentNavigatorKey: _rootNavigatorKey,
+        pageBuilder: (context, state) {
+          final extra = state.extra as Map<String, dynamic>;
+          final emotion = extra['emotion'] as Emotion;
+          final bodyMapData = extra['bodyMapData'] as BodyMapData;
+          return MaterialPage(
+            child: SomaticScanScreen(
+              emotion: emotion,
+              bodyMapData: bodyMapData,
+            ),
+          );
+        },
+      ),
+      GoRoute(
+        path: AppRoutes.cognitiveReframe,
+        parentNavigatorKey: _rootNavigatorKey,
+        pageBuilder: (context, state) {
+          final extra = state.extra as Map<String, dynamic>;
+          final emotion = extra['emotion'] as Emotion;
+          final bodyMapData = extra['bodyMapData'] as BodyMapData?;
+          return MaterialPage(
+            child: CognitiveReframeScreen(
+              emotion: emotion,
+              bodyMapData: bodyMapData,
+            ),
+          );
+        },
+      ),
+      GoRoute(
+        path: AppRoutes.reflection,
+        parentNavigatorKey: _rootNavigatorKey,
+        pageBuilder: (context, state) {
+          final extra = state.extra as Map<String, dynamic>;
+          final emotion = extra['emotion'] as Emotion;
+          final bodyMapData = extra['bodyMapData'] as BodyMapData?;
+          final cbtScore = extra['cbtScore'] as int?;
+          return MaterialPage(
+            child: ReflectionScreen(
+              emotion: emotion,
+              bodyMapData: bodyMapData,
+              cbtScore: cbtScore,
+            ),
+          );
+        },
+      ),
+
+      // Emotion Challenge History routes
+      GoRoute(
+        path: AppRoutes.emotionChallengeHistory,
+        parentNavigatorKey: _rootNavigatorKey,
+        pageBuilder: (context, state) => const MaterialPage(
+          child: EmotionChallengeHistoryScreen(),
+        ),
+      ),
+      GoRoute(
+        path: AppRoutes.emotionChallengeDetail,
+        parentNavigatorKey: _rootNavigatorKey,
+        pageBuilder: (context, state) {
+          final sessionId = state.extra as String;
+          return MaterialPage(
+            child: EmotionChallengeDetailScreen(sessionId: sessionId),
+          );
+        },
       ),
 
       // Main app shell with bottom navigation

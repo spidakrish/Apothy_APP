@@ -12,6 +12,7 @@ abstract class AuthStorageKeys {
   static const String tokenExpiresAt = 'token_expires_at';
   static const String user = 'user';
   static const String hasCompletedOnboarding = 'has_completed_onboarding';
+  static const String hasCompletedMirrorIntro = 'has_completed_mirror_intro';
 }
 
 /// Local data source for authentication using secure storage
@@ -58,6 +59,15 @@ abstract class AuthLocalDatasource {
 
   /// Clears ALL data including onboarding (for deep reset / account deletion)
   Future<void> clearAllIncludingOnboarding();
+
+  /// Checks if user has completed mirror introduction
+  Future<bool> hasCompletedMirrorIntro();
+
+  /// Marks mirror introduction as completed
+  Future<void> setMirrorIntroCompleted();
+
+  /// Clears mirror introduction status (for testing / reset)
+  Future<void> clearMirrorIntro();
 }
 
 /// Implementation of AuthLocalDatasource using flutter_secure_storage
@@ -220,5 +230,24 @@ class AuthLocalDatasourceImpl implements AuthLocalDatasource {
       deleteUser(),
       clearOnboarding(),
     ]);
+  }
+
+  @override
+  Future<bool> hasCompletedMirrorIntro() async {
+    final value = await _storage.read(key: AuthStorageKeys.hasCompletedMirrorIntro);
+    return value == 'true';
+  }
+
+  @override
+  Future<void> setMirrorIntroCompleted() async {
+    await _storage.write(
+      key: AuthStorageKeys.hasCompletedMirrorIntro,
+      value: 'true',
+    );
+  }
+
+  @override
+  Future<void> clearMirrorIntro() async {
+    await _storage.delete(key: AuthStorageKeys.hasCompletedMirrorIntro);
   }
 }

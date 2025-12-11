@@ -375,6 +375,16 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
+  Future<bool> hasCompletedMirrorIntro() {
+    return _localDatasource.hasCompletedMirrorIntro();
+  }
+
+  @override
+  Future<void> completeMirrorIntro() {
+    return _localDatasource.setMirrorIntroCompleted();
+  }
+
+  @override
   Future<Either<Failure, Unit>> clearAllLocalData() async {
     try {
       // Sign out from Google if signed in

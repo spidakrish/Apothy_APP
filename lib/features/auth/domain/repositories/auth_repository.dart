@@ -73,6 +73,12 @@ abstract class AuthRepository {
   /// Marks onboarding as completed
   Future<void> completeOnboarding();
 
+  /// Checks if user has completed mirror introduction
+  Future<bool> hasCompletedMirrorIntro();
+
+  /// Marks mirror introduction as completed
+  Future<void> completeMirrorIntro();
+
   /// Updates user profile (display name, avatar)
   Future<Either<Failure, User>> updateProfile({
     String? displayName,

@@ -386,3 +386,9 @@ final isAuthLoadingProvider = Provider<bool>((ref) {
         orElse: () => false,
       );
 });
+
+/// Provider to check if user has completed mirror introduction
+final mirrorIntroStatusProvider = FutureProvider<bool>((ref) async {
+  final authRepo = ref.watch(authRepositoryProvider);
+  return authRepo.hasCompletedMirrorIntro();
+});
