@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/error/failures.dart';
 import '../../../../core/services/ai_service.dart';
+import '../../../dashboard/presentation/providers/dashboard_providers.dart';
 import '../../data/datasources/chat_local_datasource.dart';
 import '../../data/repositories/chat_repository_impl.dart';
 import '../../domain/entities/conversation.dart';
@@ -182,6 +183,9 @@ class ChatNotifier extends AsyncNotifier<ChatState> {
         // Update conversation metadata
         _updateConversationMetadata(message);
 
+        // Award XP for sending a message
+        _awardXpForMessage();
+
         // Request AI response
         _getAIResponse(content, updatedMessages);
       },
@@ -231,6 +235,9 @@ class ChatNotifier extends AsyncNotifier<ChatState> {
         debugPrint('ChatNotifier: AI response received successfully');
         // Add AI response as assistant message
         addAssistantMessage(aiResponse.content);
+
+        // Award XP for receiving AI response
+        _awardXpForAiResponse();
       },
     );
   }
@@ -364,6 +371,24 @@ class ChatNotifier extends AsyncNotifier<ChatState> {
     final currentState = state.valueOrNull;
     if (currentState != null && currentState.hasError) {
       state = AsyncValue.data(currentState.copyWith(failure: null));
+    }
+  }
+
+  /// Awards XP for sending a message
+  Future<void> _awardXpForMessage() async {
+    try {
+      await ref.read(dashboardProvider.notifier).recordMessageSent();
+    } catch (e) {
+      debugPrint('ChatNotifier: Error awarding XP for message: $e');
+    }
+  }
+
+  /// Awards XP for receiving AI response
+  Future<void> _awardXpForAiResponse() async {
+    try {
+      await ref.read(dashboardProvider.notifier).recordAiResponse();
+    } catch (e) {
+      debugPrint('ChatNotifier: Error awarding XP for AI response: $e');
     }
   }
 

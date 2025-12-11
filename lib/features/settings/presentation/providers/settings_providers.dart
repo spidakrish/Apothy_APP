@@ -1,7 +1,9 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../../../core/services/local_notification_service.dart';
 import '../../../auth/presentation/providers/auth_providers.dart';
+import '../../../dashboard/presentation/providers/dashboard_providers.dart';
 import '../../data/settings_repository.dart';
 
 // =============================================================================
@@ -385,3 +387,149 @@ final matureContentEnabledProvider = Provider<bool>((ref) {
   return ref.watch(contentPreferencesProvider).valueOrNull?.matureContentEnabled ??
       false;
 });
+
+// =============================================================================
+// Local Notification Scheduler Provider
+// =============================================================================
+
+/// Provider for LocalNotificationService instance
+final localNotificationServiceProvider = Provider<LocalNotificationService>((ref) {
+  return LocalNotificationService.instance;
+});
+
+/// State class for notification scheduling
+class NotificationSchedulerState {
+  const NotificationSchedulerState({
+    this.isInitialized = false,
+    this.hasPermission = false,
+    this.isLoading = false,
+  });
+
+  final bool isInitialized;
+  final bool hasPermission;
+  final bool isLoading;
+
+  NotificationSchedulerState copyWith({
+    bool? isInitialized,
+    bool? hasPermission,
+    bool? isLoading,
+  }) {
+    return NotificationSchedulerState(
+      isInitialized: isInitialized ?? this.isInitialized,
+      hasPermission: hasPermission ?? this.hasPermission,
+      isLoading: isLoading ?? this.isLoading,
+    );
+  }
+}
+
+/// Notifier for managing notification scheduling
+/// Coordinates between notification settings and the actual notification service
+class NotificationSchedulerNotifier extends Notifier<NotificationSchedulerState> {
+  late LocalNotificationService _service;
+
+  @override
+  NotificationSchedulerState build() {
+    _service = ref.watch(localNotificationServiceProvider);
+
+    // Listen to notification settings changes
+    ref.listen<AsyncValue<NotificationSettings>>(
+      notificationSettingsProvider,
+      (previous, next) {
+        next.whenData((settings) => _syncNotifications(settings));
+      },
+    );
+
+    return NotificationSchedulerState(
+      isInitialized: _service.isInitialized,
+    );
+  }
+
+  /// Initialize the notification service
+  Future<void> initialize() async {
+    if (state.isInitialized) return;
+
+    state = state.copyWith(isLoading: true);
+    await _service.initialize();
+    state = state.copyWith(
+      isInitialized: true,
+      isLoading: false,
+    );
+  }
+
+  /// Request notification permissions
+  /// Returns true if permissions were granted
+  Future<bool> requestPermission() async {
+    state = state.copyWith(isLoading: true);
+    final granted = await _service.requestPermission();
+    state = state.copyWith(
+      hasPermission: granted,
+      isLoading: false,
+    );
+    return granted;
+  }
+
+  /// Check if notifications are permitted
+  Future<bool> checkPermission() async {
+    final hasPermission = await _service.hasPermission();
+    state = state.copyWith(hasPermission: hasPermission);
+    return hasPermission;
+  }
+
+  /// Sync scheduled notifications with current settings
+  Future<void> _syncNotifications(NotificationSettings settings) async {
+    if (!state.isInitialized) return;
+
+    // Get current streak from dashboard
+    final dashboardState = ref.read(dashboardProvider);
+    final currentStreak = dashboardState.valueOrNull?.userStats.currentStreak ?? 0;
+
+    // Schedule or cancel streak reminder based on Daily Ritual setting
+    if (settings.dailyRitual) {
+      await _service.scheduleStreakReminder(currentStreak: currentStreak);
+      await _service.scheduleDailyCheckIn();
+    } else {
+      await _service.cancelStreakReminder();
+      await _service.cancelDailyCheckIn();
+    }
+  }
+
+  /// Manually schedule streak reminder with current streak
+  Future<void> scheduleStreakReminder() async {
+    if (!state.isInitialized) return;
+
+    final dashboardState = ref.read(dashboardProvider);
+    final currentStreak = dashboardState.valueOrNull?.userStats.currentStreak ?? 0;
+    await _service.scheduleStreakReminder(currentStreak: currentStreak);
+  }
+
+  /// Manually schedule daily check-in
+  Future<void> scheduleDailyCheckIn() async {
+    if (!state.isInitialized) return;
+    await _service.scheduleDailyCheckIn();
+  }
+
+  /// Show achievement notification
+  Future<void> showAchievementNotification({
+    required String title,
+    required String description,
+    required int achievementId,
+  }) async {
+    if (!state.isInitialized) return;
+    await _service.showAchievementUnlocked(
+      achievementTitle: title,
+      achievementDescription: description,
+      achievementId: achievementId,
+    );
+  }
+
+  /// Cancel all notifications
+  Future<void> cancelAllNotifications() async {
+    await _service.cancelAllNotifications();
+  }
+}
+
+/// Provider for notification scheduler
+final notificationSchedulerProvider =
+    NotifierProvider<NotificationSchedulerNotifier, NotificationSchedulerState>(
+  NotificationSchedulerNotifier.new,
+);

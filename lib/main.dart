@@ -5,6 +5,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'core/router/app_router.dart';
+import 'core/services/local_notification_service.dart';
 import 'core/theme/app_theme.dart';
 import 'features/chat/data/models/conversation_model.dart';
 import 'features/chat/data/models/message_model.dart';
@@ -24,6 +25,11 @@ void main() async {
 
   // Initialize SharedPreferences
   final sharedPreferences = await SharedPreferences.getInstance();
+
+  // Initialize Local Notification Service
+  // Note: Permissions are NOT requested here - they are requested during onboarding
+  // for better UX (explain value before asking)
+  await LocalNotificationService.instance.initialize();
 
   // Set preferred orientations
   SystemChrome.setPreferredOrientations([

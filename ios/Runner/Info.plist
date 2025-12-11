@@ -55,6 +55,13 @@
 	<string>Apothy needs microphone access to hear your voice when you use speech-to-text.</string>
 
 	<!-- =================================================================== -->
+	<!-- EXPORT COMPLIANCE                                                   -->
+	<!-- App uses standard HTTPS only (exempt encryption)                    -->
+	<!-- =================================================================== -->
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
+
+	<!-- =================================================================== -->
 	<!-- GOOGLE SIGN-IN CONFIGURATION - PLACEHOLDER VALUES                   -->
 	<!-- Replace YOUR_IOS_CLIENT_ID with actual value from Google Console    -->
 	<!-- =================================================================== -->

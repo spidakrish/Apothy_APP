@@ -300,3 +300,53 @@ class AIFailure extends Failure {
     code: 'ai_unknown',
   );
 }
+
+/// Failure related to dashboard operations
+class DashboardFailure extends Failure {
+  const DashboardFailure({
+    required super.message,
+    super.code,
+  });
+
+  /// Failed to load dashboard data
+  factory DashboardFailure.loadFailed([String? details]) => DashboardFailure(
+    message: details ?? 'Failed to load dashboard data',
+    code: 'load_failed',
+  );
+
+  /// Failed to save dashboard data
+  factory DashboardFailure.saveFailed([String? details]) => DashboardFailure(
+    message: details ?? 'Failed to save dashboard data',
+    code: 'save_failed',
+  );
+
+  /// Failed to award XP
+  factory DashboardFailure.xpAwardFailed([String? details]) => DashboardFailure(
+    message: details ?? 'Failed to award XP',
+    code: 'xp_award_failed',
+  );
+
+  /// Failed to update streak
+  factory DashboardFailure.streakUpdateFailed([String? details]) => DashboardFailure(
+    message: details ?? 'Failed to update streak',
+    code: 'streak_update_failed',
+  );
+
+  /// Achievement not found
+  factory DashboardFailure.achievementNotFound() => const DashboardFailure(
+    message: 'Achievement not found',
+    code: 'achievement_not_found',
+  );
+
+  /// Storage not initialized
+  factory DashboardFailure.notInitialized() => const DashboardFailure(
+    message: 'Dashboard storage not initialized',
+    code: 'not_initialized',
+  );
+
+  /// Generic dashboard failure
+  factory DashboardFailure.unknown([String? message]) => DashboardFailure(
+    message: message ?? 'An error occurred in dashboard',
+    code: 'unknown',
+  );
+}
