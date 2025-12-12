@@ -24,6 +24,7 @@ final emotionChallengeRepositoryProvider =
     Provider<EmotionChallengeRepository>((ref) {
   return EmotionChallengeRepositoryImpl(
     localDatasource: ref.watch(emotionChallengeLocalDatasourceProvider),
+    ref: ref,
   );
 });
 

@@ -1,4 +1,5 @@
 import '../../domain/entities/user.dart';
+import '../../../subscription/domain/entities/subscription.dart';
 
 /// Data model for User entity with JSON serialization
 class UserModel extends User {
@@ -10,6 +11,9 @@ class UserModel extends User {
     required super.provider,
     super.createdAt,
     super.lastLoginAt,
+    super.subscriptionTier,
+    super.subscriptionExpiresAt,
+    super.isSubscriptionActive,
   });
 
   /// Creates a UserModel from JSON response
@@ -26,6 +30,11 @@ class UserModel extends User {
       lastLoginAt: json['last_login_at'] != null
           ? DateTime.tryParse(json['last_login_at'] as String)
           : null,
+      subscriptionTier: _parseSubscriptionTier(json['subscription_tier'] as String?),
+      subscriptionExpiresAt: json['subscription_expires_at'] != null
+          ? DateTime.tryParse(json['subscription_expires_at'] as String)
+          : null,
+      isSubscriptionActive: json['is_subscription_active'] as bool? ?? true,
     );
   }
 
@@ -39,6 +48,9 @@ class UserModel extends User {
       'provider': provider.name,
       'created_at': createdAt?.toIso8601String(),
       'last_login_at': lastLoginAt?.toIso8601String(),
+      'subscription_tier': subscriptionTier.name,
+      'subscription_expires_at': subscriptionExpiresAt?.toIso8601String(),
+      'is_subscription_active': isSubscriptionActive,
     };
   }
 
@@ -52,6 +64,9 @@ class UserModel extends User {
       provider: user.provider,
       createdAt: user.createdAt,
       lastLoginAt: user.lastLoginAt,
+      subscriptionTier: user.subscriptionTier,
+      subscriptionExpiresAt: user.subscriptionExpiresAt,
+      isSubscriptionActive: user.isSubscriptionActive,
     );
   }
 
@@ -65,6 +80,9 @@ class UserModel extends User {
       provider: provider,
       createdAt: createdAt,
       lastLoginAt: lastLoginAt,
+      subscriptionTier: subscriptionTier,
+      subscriptionExpiresAt: subscriptionExpiresAt,
+      isSubscriptionActive: isSubscriptionActive,
     );
   }
 
@@ -78,6 +96,19 @@ class UserModel extends User {
       case 'email':
       default:
         return AuthProvider.email;
+    }
+  }
+
+  /// Parses subscription tier string to enum
+  static SubscriptionTier _parseSubscriptionTier(String? tier) {
+    switch (tier?.toLowerCase()) {
+      case 'plus':
+        return SubscriptionTier.plus;
+      case 'pro':
+        return SubscriptionTier.pro;
+      case 'free':
+      default:
+        return SubscriptionTier.free;
     }
   }
 }

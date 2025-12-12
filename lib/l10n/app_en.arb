@@ -1,0 +1,698 @@
+{
+  "@@locale": "en",
+
+  "appName": "Apothy",
+  "@appName": {
+    "description": "Application name"
+  },
+
+  "ok": "OK",
+  "@ok": {
+    "description": "OK button text"
+  },
+
+  "cancel": "Cancel",
+  "@cancel": {
+    "description": "Cancel button text"
+  },
+
+  "continueButton": "Continue",
+  "@continueButton": {
+    "description": "Continue button text"
+  },
+
+  "save": "Save",
+  "@save": {
+    "description": "Save button text"
+  },
+
+  "delete": "Delete",
+  "@delete": {
+    "description": "Delete button text"
+  },
+
+  "loading": "Loading...",
+  "@loading": {
+    "description": "Loading indicator text"
+  },
+
+  "error": "Error",
+  "@error": {
+    "description": "Generic error title"
+  },
+
+  "retry": "Retry",
+  "@retry": {
+    "description": "Retry button text"
+  },
+
+  "close": "Close",
+  "@close": {
+    "description": "Close button text"
+  },
+
+  "settingsTitle": "Settings",
+  "@settingsTitle": {
+    "description": "Settings screen title"
+  },
+
+  "settingsProfile": "Profile",
+  "@settingsProfile": {
+    "description": "Profile section title"
+  },
+
+  "settingsAccount": "Account",
+  "@settingsAccount": {
+    "description": "Account settings tile"
+  },
+
+  "settingsNotSignedIn": "Not signed in",
+  "@settingsNotSignedIn": {
+    "description": "Not signed in status"
+  },
+
+  "settingsNotifications": "Notifications",
+  "@settingsNotifications": {
+    "description": "Notifications section title"
+  },
+
+  "settingsManageNotifications": "Manage Notifications",
+  "@settingsManageNotifications": {
+    "description": "Manage notifications tile"
+  },
+
+  "settingsNotificationsCount": "{count} of 4 enabled",
+  "@settingsNotificationsCount": {
+    "description": "Notifications enabled count",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+
+  "settingsAppearance": "Appearance",
+  "@settingsAppearance": {
+    "description": "Appearance section title"
+  },
+
+  "settingsTheme": "Theme",
+  "@settingsTheme": {
+    "description": "Theme settings tile"
+  },
+
+  "settingsDarkMode": "Dark mode",
+  "@settingsDarkMode": {
+    "description": "Dark mode subtitle"
+  },
+
+  "settingsTextSize": "Text Size",
+  "@settingsTextSize": {
+    "description": "Text size settings tile"
+  },
+
+  "settingsLanguage": "Language",
+  "@settingsLanguage": {
+    "description": "Language settings tile"
+  },
+
+  "settingsContent": "Content",
+  "@settingsContent": {
+    "description": "Content section title"
+  },
+
+  "settingsContentPreferences": "Content Preferences",
+  "@settingsContentPreferences": {
+    "description": "Content preferences tile"
+  },
+
+  "settingsData": "Data",
+  "@settingsData": {
+    "description": "Data section title"
+  },
+
+  "settingsClearChatHistory": "Clear Chat History",
+  "@settingsClearChatHistory": {
+    "description": "Clear chat history tile"
+  },
+
+  "settingsClearChatHistorySubtitle": "Delete conversations and memory",
+  "@settingsClearChatHistorySubtitle": {
+    "description": "Clear chat history subtitle"
+  },
+
+  "settingsAdvanced": "Advanced",
+  "@settingsAdvanced": {
+    "description": "Advanced settings tile"
+  },
+
+  "settingsAdvancedSubtitle": "Reset app to fresh state",
+  "@settingsAdvancedSubtitle": {
+    "description": "Advanced settings subtitle"
+  },
+
+  "settingsPrivacy": "Privacy",
+  "@settingsPrivacy": {
+    "description": "Privacy section title"
+  },
+
+  "settingsDataPrivacy": "Data Privacy",
+  "@settingsDataPrivacy": {
+    "description": "Data privacy tile"
+  },
+
+  "settingsDataPrivacySubtitle": "How your data is handled",
+  "@settingsDataPrivacySubtitle": {
+    "description": "Data privacy subtitle"
+  },
+
+  "settingsDangerZone": "Danger Zone",
+  "@settingsDangerZone": {
+    "description": "Danger zone section title"
+  },
+
+  "settingsDeleteAccount": "Delete Account",
+  "@settingsDeleteAccount": {
+    "description": "Delete account tile"
+  },
+
+  "settingsDeleteAccountSubtitle": "Permanently delete your account",
+  "@settingsDeleteAccountSubtitle": {
+    "description": "Delete account subtitle"
+  },
+
+  "settingsAbout": "About",
+  "@settingsAbout": {
+    "description": "About section title"
+  },
+
+  "settingsAboutApothy": "About Apothy",
+  "@settingsAboutApothy": {
+    "description": "About Apothy tile"
+  },
+
+  "settingsVersion": "Version 1.0.0",
+  "@settingsVersion": {
+    "description": "App version"
+  },
+
+  "settingsTermsOfService": "Terms of Service",
+  "@settingsTermsOfService": {
+    "description": "Terms of service tile"
+  },
+
+  "settingsTermsSubtitle": "Read our terms",
+  "@settingsTermsSubtitle": {
+    "description": "Terms of service subtitle"
+  },
+
+  "settingsPrivacyPolicy": "Privacy Policy",
+  "@settingsPrivacyPolicy": {
+    "description": "Privacy policy tile"
+  },
+
+  "settingsPrivacyPolicySubtitle": "Read our privacy policy",
+  "@settingsPrivacyPolicySubtitle": {
+    "description": "Privacy policy subtitle"
+  },
+
+  "settingsSignOut": "Sign Out",
+  "@settingsSignOut": {
+    "description": "Sign out button"
+  },
+
+  "settingsTapToChangeAvatar": "Tap to change avatar",
+  "@settingsTapToChangeAvatar": {
+    "description": "Tap to change avatar hint"
+  },
+
+  "settingsDisplayName": "Display Name",
+  "@settingsDisplayName": {
+    "description": "Display name label"
+  },
+
+  "settingsEmail": "Email",
+  "@settingsEmail": {
+    "description": "Email label"
+  },
+
+  "settingsNotAvailable": "Not available",
+  "@settingsNotAvailable": {
+    "description": "Not available text"
+  },
+
+  "settingsSignInMethod": "Sign-in Method",
+  "@settingsSignInMethod": {
+    "description": "Sign-in method label"
+  },
+
+  "settingsChooseAvatar": "Choose Avatar",
+  "@settingsChooseAvatar": {
+    "description": "Choose avatar dialog title"
+  },
+
+  "settingsFailedToUpdateAvatar": "Failed to update avatar",
+  "@settingsFailedToUpdateAvatar": {
+    "description": "Failed to update avatar error"
+  },
+
+  "settingsEditDisplayName": "Edit Display Name",
+  "@settingsEditDisplayName": {
+    "description": "Edit display name dialog title"
+  },
+
+  "settingsEnterYourName": "Enter your name",
+  "@settingsEnterYourName": {
+    "description": "Enter your name hint"
+  },
+
+  "settingsNameCannotBeEmpty": "Name cannot be empty",
+  "@settingsNameCannotBeEmpty": {
+    "description": "Name cannot be empty error"
+  },
+
+  "settingsFailedToUpdateName": "Failed to update name",
+  "@settingsFailedToUpdateName": {
+    "description": "Failed to update name error"
+  },
+
+  "settingsAuthProviderApple": "Apple",
+  "@settingsAuthProviderApple": {
+    "description": "Apple sign-in provider"
+  },
+
+  "settingsAuthProviderGoogle": "Google",
+  "@settingsAuthProviderGoogle": {
+    "description": "Google sign-in provider"
+  },
+
+  "settingsAuthProviderEmail": "Email",
+  "@settingsAuthProviderEmail": {
+    "description": "Email sign-in provider"
+  },
+
+  "settingsAuthProviderUnknown": "Unknown",
+  "@settingsAuthProviderUnknown": {
+    "description": "Unknown sign-in provider"
+  },
+
+  "settingsNotificationsDescription": "Apothy respects your attention. No manipulation, no spam.",
+  "@settingsNotificationsDescription": {
+    "description": "Notifications description"
+  },
+
+  "settingsDailyMirrorRitual": "Daily Mirror Ritual",
+  "@settingsDailyMirrorRitual": {
+    "description": "Daily mirror ritual notification title"
+  },
+
+  "settingsDailyMirrorRitualDescription": "A gentle reminder when your daily mirror is ready",
+  "@settingsDailyMirrorRitualDescription": {
+    "description": "Daily mirror ritual notification description"
+  },
+
+  "settingsCreationComplete": "Creation Complete",
+  "@settingsCreationComplete": {
+    "description": "Creation complete notification title"
+  },
+
+  "settingsCreationCompleteDescription": "Know when long-form creations (videos, games) are ready",
+  "@settingsCreationCompleteDescription": {
+    "description": "Creation complete notification description"
+  },
+
+  "settingsMoodHealthInsights": "Mood & Health Insights",
+  "@settingsMoodHealthInsights": {
+    "description": "Mood & health insights notification title"
+  },
+
+  "settingsMoodHealthInsightsDescription": "Stress patterns, sleep correlations, ritual streaks",
+  "@settingsMoodHealthInsightsDescription": {
+    "description": "Mood & health insights notification description"
+  },
+
+  "settingsMoodHealthInsightsExample": "Optional wellness insights based on your usage",
+  "@settingsMoodHealthInsightsExample": {
+    "description": "Mood & health insights example"
+  },
+
+  "settingsSystemUpdates": "System Updates",
+  "@settingsSystemUpdates": {
+    "description": "System updates notification title"
+  },
+
+  "settingsSystemUpdatesDescription": "Security patches and new features",
+  "@settingsSystemUpdatesDescription": {
+    "description": "System updates notification description"
+  },
+
+  "settingsSystemUpdatesExample": "Required for App Store compliance",
+  "@settingsSystemUpdatesExample": {
+    "description": "System updates example"
+  },
+
+  "settingsThemeDialogMessage": "Apothy currently supports dark mode only. Light mode and additional themes may be added in future updates.",
+  "@settingsThemeDialogMessage": {
+    "description": "Theme dialog message"
+  },
+
+  "settingsChooseTextSize": "Choose your preferred text size",
+  "@settingsChooseTextSize": {
+    "description": "Choose text size description"
+  },
+
+  "settingsSystemDefault": "System Default",
+  "@settingsSystemDefault": {
+    "description": "System default option"
+  },
+
+  "settingsUseDeviceLanguage": "Use device language",
+  "@settingsUseDeviceLanguage": {
+    "description": "Use device language description"
+  },
+
+  "settingsChooseLanguage": "Choose your preferred language",
+  "@settingsChooseLanguage": {
+    "description": "Choose language description"
+  },
+
+  "settingsContentPreferencesDescription": "Customize how Apotheon communicates with you.",
+  "@settingsContentPreferencesDescription": {
+    "description": "Content preferences description"
+  },
+
+  "settingsCreativeStyle": "Creative Style",
+  "@settingsCreativeStyle": {
+    "description": "Creative style label"
+  },
+
+  "settingsCreativeStyleDescription": "Choose how Apotheon responds to you",
+  "@settingsCreativeStyleDescription": {
+    "description": "Creative style description"
+  },
+
+  "settingsMatureContent": "Mature Content",
+  "@settingsMatureContent": {
+    "description": "Mature content label"
+  },
+
+  "settingsMatureContentDescription": "Allow adult themes in responses",
+  "@settingsMatureContentDescription": {
+    "description": "Mature content description"
+  },
+
+  "settingsMatureContentEnabled": "Adult themes enabled. Use responsibly.",
+  "@settingsMatureContentEnabled": {
+    "description": "Mature content enabled message"
+  },
+
+  "settingsMatureContentDisabled": "Safe for work (SFW) - Default",
+  "@settingsMatureContentDisabled": {
+    "description": "Mature content disabled message"
+  },
+
+  "settingsPrivacyDialogMessage": "Your data is stored securely on your device. Conversations are processed to provide personalized responses but are never sold or shared with third parties.\n\nYou can delete your data at any time using the \"Clear Data\" option.",
+  "@settingsPrivacyDialogMessage": {
+    "description": "Privacy dialog message"
+  },
+
+  "settingsClearChatHistoryDialogTitle": "Clear Chat History",
+  "@settingsClearChatHistoryDialogTitle": {
+    "description": "Clear chat history dialog title"
+  },
+
+  "settingsClearChatHistoryDialogMessage": "This will delete:",
+  "@settingsClearChatHistoryDialogMessage": {
+    "description": "Clear chat history dialog message"
+  },
+
+  "settingsClearChatHistoryItem1": "• All chat conversations",
+  "@settingsClearChatHistoryItem1": {
+    "description": "Clear chat history item 1"
+  },
+
+  "settingsClearChatHistoryItem2": "• Conversation memory and context",
+  "@settingsClearChatHistoryItem2": {
+    "description": "Clear chat history item 2"
+  },
+
+  "settingsClearChatHistoryItem3": "• Chat-related preferences",
+  "@settingsClearChatHistoryItem3": {
+    "description": "Clear chat history item 3"
+  },
+
+  "settingsClearChatHistoryNote": "Your account, settings, and any exported files will not be affected.",
+  "@settingsClearChatHistoryNote": {
+    "description": "Clear chat history note"
+  },
+
+  "settingsClearChatHistorySuccess": "Chat history cleared",
+  "@settingsClearChatHistorySuccess": {
+    "description": "Chat history cleared success"
+  },
+
+  "settingsClearChatHistoryFailed": "Failed to clear chat history",
+  "@settingsClearChatHistoryFailed": {
+    "description": "Chat history cleared failed"
+  },
+
+  "settingsClearHistoryButton": "Clear History",
+  "@settingsClearHistoryButton": {
+    "description": "Clear history button"
+  },
+
+  "settingsAdvancedDataManagement": "Advanced Data Management",
+  "@settingsAdvancedDataManagement": {
+    "description": "Advanced data management title"
+  },
+
+  "settingsAdvancedWarning": "These actions are irreversible.",
+  "@settingsAdvancedWarning": {
+    "description": "Advanced warning message"
+  },
+
+  "settingsResetToFreshState": "Reset to Fresh State",
+  "@settingsResetToFreshState": {
+    "description": "Reset to fresh state tile"
+  },
+
+  "settingsResetDescription": "This will erase ALL local data and reset the app to its initial state, as if you just installed it.",
+  "@settingsResetDescription": {
+    "description": "Reset description"
+  },
+
+  "settingsResetWhatGetsCleared": "What gets cleared:\n• All conversations and chat history\n• Account credentials (you'll need to sign in again)\n• All settings and preferences\n• Emotion challenge history\n• Any cached data",
+  "@settingsResetWhatGetsCleared": {
+    "description": "What gets cleared list"
+  },
+
+  "settingsResetNote": "Your cloud account and subscription remain intact.",
+  "@settingsResetNote": {
+    "description": "Reset note"
+  },
+
+  "settingsResetAppButton": "Reset App",
+  "@settingsResetAppButton": {
+    "description": "Reset app button"
+  },
+
+  "settingsResetConfirmTitle": "Are you sure?",
+  "@settingsResetConfirmTitle": {
+    "description": "Reset confirmation title"
+  },
+
+  "settingsResetConfirmMessage": "Resetting will erase all local data. This cannot be undone.\n\nYou will need to sign in again and complete onboarding.",
+  "@settingsResetConfirmMessage": {
+    "description": "Reset confirmation message"
+  },
+
+  "settingsResetFailed": "Failed to reset app",
+  "@settingsResetFailed": {
+    "description": "Reset failed message"
+  },
+
+  "settingsResetEverythingButton": "Reset Everything",
+  "@settingsResetEverythingButton": {
+    "description": "Reset everything button"
+  },
+
+  "settingsDeleteAccountDialogMessage": "This will permanently delete your account.",
+  "@settingsDeleteAccountDialogMessage": {
+    "description": "Delete account dialog message"
+  },
+
+  "settingsDeleteAccountWhatGetsDeleted": "What gets deleted:",
+  "@settingsDeleteAccountWhatGetsDeleted": {
+    "description": "What gets deleted label"
+  },
+
+  "settingsDeleteAccountItem1": "• Your Apothy account",
+  "@settingsDeleteAccountItem1": {
+    "description": "Delete account item 1"
+  },
+
+  "settingsDeleteAccountItem2": "• All conversation history (cloud & local)",
+  "@settingsDeleteAccountItem2": {
+    "description": "Delete account item 2"
+  },
+
+  "settingsDeleteAccountItem3": "• Profile and preferences",
+  "@settingsDeleteAccountItem3": {
+    "description": "Delete account item 3"
+  },
+
+  "settingsDeleteAccountItem4": "• Emotion challenge data",
+  "@settingsDeleteAccountItem4": {
+    "description": "Delete account item 4"
+  },
+
+  "settingsDeleteAccountItem5": "• All devices will be signed out",
+  "@settingsDeleteAccountItem5": {
+    "description": "Delete account item 5"
+  },
+
+  "settingsDeleteAccountSubscriptionNote": "Subscriptions are managed through your App Store.",
+  "@settingsDeleteAccountSubscriptionNote": {
+    "description": "Delete account subscription note"
+  },
+
+  "settingsDeleteAccountButton": "Delete Account",
+  "@settingsDeleteAccountButton": {
+    "description": "Delete account button"
+  },
+
+  "settingsFinalConfirmation": "Final Confirmation",
+  "@settingsFinalConfirmation": {
+    "description": "Final confirmation title"
+  },
+
+  "settingsFinalConfirmationMessage": "Deleting your account erases all cloud data and unlinks all devices. This action cannot be undone.\n\nAre you absolutely sure?",
+  "@settingsFinalConfirmationMessage": {
+    "description": "Final confirmation message"
+  },
+
+  "settingsKeepAccountButton": "Keep Account",
+  "@settingsKeepAccountButton": {
+    "description": "Keep account button"
+  },
+
+  "settingsDeleteAccountFailed": "Failed to delete account",
+  "@settingsDeleteAccountFailed": {
+    "description": "Delete account failed message"
+  },
+
+  "settingsDeleteForeverButton": "Delete Forever",
+  "@settingsDeleteForeverButton": {
+    "description": "Delete forever button"
+  },
+
+  "settingsAboutDescription": "Your AI companion for meaningful conversations and personal growth. Born from light. Trained in truth. Built to become what you need.",
+  "@settingsAboutDescription": {
+    "description": "About Apothy description"
+  },
+
+  "settingsTermsOfServiceContent": "TERMS OF SERVICE\n\nLast updated: December 2024\n\nBy using Apothy, you agree to these terms of service.\n\nApothy is an AI companion designed for personal growth and meaningful conversations. You agree to use the service responsibly.\n\nYour privacy is important to us. Please review our Privacy Policy for details on how we handle your data.\n\nConversations are private and stored securely. We do not share your data with third parties.\n\nWe may update these terms from time to time. Continued use constitutes acceptance of changes.\n\nFor questions about these terms, please contact us through the app.",
+  "@settingsTermsOfServiceContent": {
+    "description": "Terms of service content"
+  },
+
+  "settingsPrivacyPolicyContent": "PRIVACY POLICY\n\nLast updated: December 2024\n\nWe collect information you provide directly, such as account details and conversation history.\n\nWe use your information to provide and improve the Apothy experience, including personalized responses.\n\nYour data is stored securely on your device and our servers with encryption.\n\nWe do not sell or share your personal data with third parties for marketing purposes.\n\nYou can access, modify, or delete your data at any time through the app settings.\n\nWe implement industry-standard security measures to protect your data.\n\nFor privacy-related questions, please contact us through the app.",
+  "@settingsPrivacyPolicyContent": {
+    "description": "Privacy policy content"
+  },
+
+  "settingsSignOutConfirmMessage": "Are you sure you want to sign out?",
+  "@settingsSignOutConfirmMessage": {
+    "description": "Sign out confirmation message"
+  },
+
+  "subscriptionTitle": "Upgrade to Premium",
+  "@subscriptionTitle": {
+    "description": "Subscription screen title"
+  },
+
+  "subscriptionPlusTitle": "Plus",
+  "@subscriptionPlusTitle": {
+    "description": "Plus tier title"
+  },
+
+  "subscriptionProTitle": "Pro",
+  "@subscriptionProTitle": {
+    "description": "Pro tier title"
+  },
+
+  "subscriptionFreeTitle": "Free",
+  "@subscriptionFreeTitle": {
+    "description": "Free tier title"
+  },
+
+  "subscriptionMonthly": "per month",
+  "@subscriptionMonthly": {
+    "description": "Monthly subscription period"
+  },
+
+  "subscriptionYearly": "per year",
+  "@subscriptionYearly": {
+    "description": "Yearly subscription period"
+  },
+
+  "subscriptionRestorePurchases": "Restore Purchases",
+  "@subscriptionRestorePurchases": {
+    "description": "Restore purchases button text"
+  },
+
+  "subscriptionManage": "Manage Subscription",
+  "@subscriptionManage": {
+    "description": "Manage subscription button text"
+  },
+
+  "subscriptionUpgrade": "Upgrade Now",
+  "@subscriptionUpgrade": {
+    "description": "Upgrade button text"
+  },
+
+  "subscriptionLimitReached": "Monthly limit reached",
+  "@subscriptionLimitReached": {
+    "description": "Limit reached title"
+  },
+
+  "subscriptionLimitMessage": "You've used all 5 free emotion challenges this month. Upgrade to Plus for unlimited access and unlock all premium features!",
+  "@subscriptionLimitMessage": {
+    "description": "Subscription limit message for emotion challenges"
+  },
+
+  "settingsSubscription": "Subscription",
+  "@settingsSubscription": {
+    "description": "Subscription settings section header"
+  },
+
+  "settingsManageSubscription": "Manage Subscription",
+  "@settingsManageSubscription": {
+    "description": "Manage subscription settings tile"
+  },
+
+  "subscriptionActive": "Active",
+  "@subscriptionActive": {
+    "description": "Active subscription status"
+  },
+
+  "subscriptionExpired": "Expired",
+  "@subscriptionExpired": {
+    "description": "Expired subscription status"
+  },
+
+  "subscriptionCancelled": "Cancelled",
+  "@subscriptionCancelled": {
+    "description": "Cancelled subscription status"
+  },
+
+  "subscriptionTrial": "Trial",
+  "@subscriptionTrial": {
+    "description": "Trial subscription status"
+  },
+
+  "subscriptionGracePeriod": "Grace Period",
+  "@subscriptionGracePeriod": {
+    "description": "Grace period subscription status"
+  }
+}

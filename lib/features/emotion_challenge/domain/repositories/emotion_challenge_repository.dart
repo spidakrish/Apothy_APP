@@ -39,6 +39,16 @@ abstract class EmotionChallengeRepository {
   /// Gets the total number of completed sessions
   Future<Either<Failure, int>> getSessionCount();
 
+  /// Checks if user can start a new emotion challenge
+  ///
+  /// Free users are limited to 5 challenges per month
+  /// Premium users have unlimited challenges
+  /// Returns true if user can start a challenge, false otherwise
+  Future<Either<Failure, bool>> canStartChallenge();
+
+  /// Gets the number of challenges completed this month
+  Future<Either<Failure, int>> getChallengesThisMonth();
+
   // ============================================================================
   // Utility Operations
   // ============================================================================

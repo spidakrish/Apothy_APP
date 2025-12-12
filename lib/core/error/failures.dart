@@ -350,3 +350,103 @@ class DashboardFailure extends Failure {
     code: 'unknown',
   );
 }
+
+/// Failure related to subscription and in-app purchase operations
+class SubscriptionFailure extends Failure {
+  const SubscriptionFailure({
+    required super.message,
+    super.code,
+  });
+
+  /// Failed to load subscription status
+  factory SubscriptionFailure.loadFailed([String? details]) => SubscriptionFailure(
+    message: details ?? 'Failed to load subscription status',
+    code: 'load_failed',
+  );
+
+  /// Purchase was cancelled by user
+  factory SubscriptionFailure.purchaseCancelled() => const SubscriptionFailure(
+    message: 'Purchase was cancelled',
+    code: 'purchase_cancelled',
+  );
+
+  /// Purchase failed
+  factory SubscriptionFailure.purchaseFailed([String? details]) => SubscriptionFailure(
+    message: details ?? 'Purchase failed. Please try again.',
+    code: 'purchase_failed',
+  );
+
+  /// User already owns this subscription
+  factory SubscriptionFailure.alreadyOwned() => const SubscriptionFailure(
+    message: 'You already have this subscription',
+    code: 'already_owned',
+  );
+
+  /// Payment pending
+  factory SubscriptionFailure.paymentPending() => const SubscriptionFailure(
+    message: 'Payment is pending. Please wait for confirmation.',
+    code: 'payment_pending',
+  );
+
+  /// Failed to restore purchases
+  factory SubscriptionFailure.restoreFailed([String? details]) => SubscriptionFailure(
+    message: details ?? 'Failed to restore purchases',
+    code: 'restore_failed',
+  );
+
+  /// No purchases to restore
+  factory SubscriptionFailure.noPurchases() => const SubscriptionFailure(
+    message: 'No previous purchases found',
+    code: 'no_purchases',
+  );
+
+  /// RevenueCat not configured
+  factory SubscriptionFailure.notConfigured() => const SubscriptionFailure(
+    message: 'Subscription service is not configured',
+    code: 'not_configured',
+  );
+
+  /// Storage not initialized
+  factory SubscriptionFailure.notInitialized() => const SubscriptionFailure(
+    message: 'Subscription storage not initialized',
+    code: 'not_initialized',
+  );
+
+  /// Generic subscription failure
+  factory SubscriptionFailure.unknown([String? message]) => SubscriptionFailure(
+    message: message ?? 'An error occurred with subscription',
+    code: 'unknown',
+  );
+}
+
+/// Failure related to cache operations
+class CacheFailure extends Failure {
+  const CacheFailure({
+    required super.message,
+    super.code,
+  });
+
+  /// Failed to read from cache
+  factory CacheFailure.readFailed([String? details]) => CacheFailure(
+    message: details ?? 'Failed to read from cache',
+    code: 'cache_read_failed',
+  );
+
+  /// Failed to write to cache
+  factory CacheFailure.writeFailed([String? details]) => CacheFailure(
+    message: details ?? 'Failed to write to cache',
+    code: 'cache_write_failed',
+  );
+
+  /// Cache is invalid or expired
+  factory CacheFailure.invalid() => const CacheFailure(
+    message: 'Cache is invalid or expired',
+    code: 'cache_invalid',
+  );
+
+  /// Generic cache failure
+  factory CacheFailure.unknown([String? message]) => CacheFailure(
+    message: message ?? 'Cache error occurred',
+    code: 'cache_unknown',
+  );
+}

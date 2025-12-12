@@ -185,6 +185,9 @@ class AuthLocalDatasourceImpl implements AuthLocalDatasource {
       provider: currentUser.provider,
       createdAt: currentUser.createdAt,
       lastLoginAt: currentUser.lastLoginAt,
+      subscriptionTier: currentUser.subscriptionTier,
+      subscriptionExpiresAt: currentUser.subscriptionExpiresAt,
+      isSubscriptionActive: currentUser.isSubscriptionActive,
     );
 
     await saveUser(updatedUser);

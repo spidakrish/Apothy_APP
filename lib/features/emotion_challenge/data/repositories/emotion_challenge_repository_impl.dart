@@ -1,6 +1,8 @@
 import 'package:fpdart/fpdart.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/error/failures.dart';
+import '../../../subscription/presentation/providers/subscription_providers.dart';
 import '../../domain/entities/emotion_challenge_session.dart';
 import '../../domain/repositories/emotion_challenge_repository.dart';
 import '../datasources/emotion_challenge_local_datasource.dart';
@@ -10,9 +12,11 @@ import '../models/emotion_challenge_session_model.dart';
 class EmotionChallengeRepositoryImpl implements EmotionChallengeRepository {
   EmotionChallengeRepositoryImpl({
     required this.localDatasource,
+    required this.ref,
   });
 
   final EmotionChallengeLocalDatasource localDatasource;
+  final Ref ref;
 
   @override
   Future<Either<Failure, EmotionChallengeSession>> saveSession(
@@ -109,6 +113,58 @@ class EmotionChallengeRepositoryImpl implements EmotionChallengeRepository {
       return Left(
         StorageFailure(
           message: 'Failed to clear emotion challenge data: ${e.toString()}',
+        ),
+      );
+    }
+  }
+
+  @override
+  Future<Either<Failure, bool>> canStartChallenge() async {
+    try {
+      // Check if user has premium subscription
+      final isPremium = ref.read(isPremiumProvider);
+
+      // Premium users have unlimited challenges
+      if (isPremium) {
+        return const Right(true);
+      }
+
+      // Free users are limited to 5 challenges per month
+      final challengesThisMonth = await getChallengesThisMonth();
+
+      return challengesThisMonth.fold(
+        (failure) => Left(failure),
+        (count) => Right(count < 5),
+      );
+    } catch (e) {
+      return Left(
+        StorageFailure(
+          message: 'Failed to check challenge limit: ${e.toString()}',
+        ),
+      );
+    }
+  }
+
+  @override
+  Future<Either<Failure, int>> getChallengesThisMonth() async {
+    try {
+      // Get all sessions
+      final sessions = await localDatasource.getSessions();
+
+      // Get first day of current month
+      final now = DateTime.now();
+      final firstDayOfMonth = DateTime(now.year, now.month, 1);
+
+      // Count sessions completed this month
+      final thisMonthCount = sessions
+          .where((session) => session.startedAt.isAfter(firstDayOfMonth))
+          .length;
+
+      return Right(thisMonthCount);
+    } catch (e) {
+      return Left(
+        StorageFailure(
+          message: 'Failed to count challenges this month: ${e.toString()}',
         ),
       );
     }
