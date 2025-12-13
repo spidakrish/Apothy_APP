@@ -3,9 +3,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../features/auth/presentation/providers/auth_providers.dart';
+import '../../features/auth/presentation/screens/forgot_password_screen.dart';
 import '../../features/auth/presentation/screens/login_screen.dart';
 import '../../features/auth/presentation/screens/onboarding_screen.dart';
 import '../../features/auth/presentation/screens/signup_screen.dart';
+import '../../features/auth/presentation/screens/verify_reset_code_screen.dart';
 import '../../features/chat/presentation/chat_screen.dart';
 import '../../features/dashboard/presentation/dashboard_screen.dart';
 import '../../features/emotion_challenge/domain/entities/emotion.dart';
@@ -31,6 +33,8 @@ class AppRoutes {
   static const String onboarding = '/onboarding';
   static const String login = '/login';
   static const String signup = '/signup';
+  static const String forgotPassword = '/forgot-password';
+  static const String verifyResetCode = '/verify-reset-code';
 
   // Main app routes
   static const String mirror = '/mirror';
@@ -113,7 +117,12 @@ final appRouterProvider = Provider<GoRouter>((ref) {
       final currentPath = state.matchedLocation;
 
       // Define login/signup routes (separate from onboarding)
-      final loginRoutes = [AppRoutes.login, AppRoutes.signup];
+      final loginRoutes = [
+        AppRoutes.login,
+        AppRoutes.signup,
+        AppRoutes.forgotPassword,
+        AppRoutes.verifyResetCode,
+      ];
       final isOnLoginRoute = loginRoutes.contains(currentPath);
       final isOnOnboarding = currentPath == AppRoutes.onboarding;
 
@@ -158,6 +167,21 @@ final appRouterProvider = Provider<GoRouter>((ref) {
         pageBuilder: (context, state) => const MaterialPage(
           child: SignUpScreen(),
         ),
+      ),
+      GoRoute(
+        path: AppRoutes.forgotPassword,
+        pageBuilder: (context, state) => const MaterialPage(
+          child: ForgotPasswordScreen(),
+        ),
+      ),
+      GoRoute(
+        path: AppRoutes.verifyResetCode,
+        pageBuilder: (context, state) {
+          final email = state.extra as String;
+          return MaterialPage(
+            child: VerifyResetCodeScreen(email: email),
+          );
+        },
       ),
 
       // Mirror introduction flow

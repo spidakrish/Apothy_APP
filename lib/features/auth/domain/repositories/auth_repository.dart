@@ -96,4 +96,28 @@ abstract class AuthRepository {
   /// - Delete cloud account and all cloud data
   /// - Clear all local data including onboarding
   Future<Either<Failure, Unit>> deleteAccount();
+
+  /// Sends a password reset code to the user's email
+  ///
+  /// Returns [Unit] on success or [Failure] on error
+  Future<Either<Failure, Unit>> sendPasswordResetCode({
+    required String email,
+  });
+
+  /// Verifies the password reset code
+  ///
+  /// Returns [Unit] on success or [Failure] on error
+  Future<Either<Failure, Unit>> verifyPasswordResetCode({
+    required String email,
+    required String code,
+  });
+
+  /// Resets the password with the verified code
+  ///
+  /// Returns [Unit] on success or [Failure] on error
+  Future<Either<Failure, Unit>> resetPassword({
+    required String email,
+    required String code,
+    required String newPassword,
+  });
 }

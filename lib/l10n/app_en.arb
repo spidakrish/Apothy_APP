@@ -694,5 +694,140 @@
   "subscriptionGracePeriod": "Grace Period",
   "@subscriptionGracePeriod": {
     "description": "Grace period subscription status"
+  },
+
+  "forgotPasswordTitle": "Forgot Password?",
+  "@forgotPasswordTitle": {
+    "description": "Forgot password screen title"
+  },
+
+  "forgotPasswordDescription": "Enter your email address and we'll send you a code to reset your password.",
+  "@forgotPasswordDescription": {
+    "description": "Forgot password screen description"
+  },
+
+  "forgotPasswordEmailLabel": "Email",
+  "@forgotPasswordEmailLabel": {
+    "description": "Email input label on forgot password screen"
+  },
+
+  "forgotPasswordEmailHint": "Enter your email address",
+  "@forgotPasswordEmailHint": {
+    "description": "Email input hint on forgot password screen"
+  },
+
+  "forgotPasswordSendButton": "Send Reset Code",
+  "@forgotPasswordSendButton": {
+    "description": "Send reset code button text"
+  },
+
+  "forgotPasswordInfoMock": "In mock mode, the reset code is: 123456",
+  "@forgotPasswordInfoMock": {
+    "description": "Info message about mock reset code"
+  },
+
+  "resetPasswordTitle": "Reset Password",
+  "@resetPasswordTitle": {
+    "description": "Reset password screen title"
+  },
+
+  "resetPasswordDescription": "Enter the verification code sent to {email} and your new password.",
+  "@resetPasswordDescription": {
+    "description": "Reset password screen description",
+    "placeholders": {
+      "email": {
+        "type": "String"
+      }
+    }
+  },
+
+  "resetPasswordCodeLabel": "Verification Code",
+  "@resetPasswordCodeLabel": {
+    "description": "Verification code input label"
+  },
+
+  "resetPasswordCodeHint": "Enter 6-digit code",
+  "@resetPasswordCodeHint": {
+    "description": "Verification code input hint"
+  },
+
+  "resetPasswordNewPasswordLabel": "New Password",
+  "@resetPasswordNewPasswordLabel": {
+    "description": "New password input label"
+  },
+
+  "resetPasswordNewPasswordHint": "Enter new password",
+  "@resetPasswordNewPasswordHint": {
+    "description": "New password input hint"
+  },
+
+  "resetPasswordConfirmLabel": "Confirm Password",
+  "@resetPasswordConfirmLabel": {
+    "description": "Confirm password input label"
+  },
+
+  "resetPasswordConfirmHint": "Re-enter new password",
+  "@resetPasswordConfirmHint": {
+    "description": "Confirm password input hint"
+  },
+
+  "resetPasswordButton": "Reset Password",
+  "@resetPasswordButton": {
+    "description": "Reset password button text"
+  },
+
+  "resetPasswordSuccess": "Password reset successful! Please login with your new password.",
+  "@resetPasswordSuccess": {
+    "description": "Password reset success message"
+  },
+
+  "resetPasswordCodeError": "Please enter the verification code",
+  "@resetPasswordCodeError": {
+    "description": "Verification code required error"
+  },
+
+  "resetPasswordCodeLengthError": "Code must be 6 digits",
+  "@resetPasswordCodeLengthError": {
+    "description": "Code length validation error"
+  },
+
+  "resetPasswordCodeFormatError": "Code must contain only numbers",
+  "@resetPasswordCodeFormatError": {
+    "description": "Code format validation error"
+  },
+
+  "resetPasswordNewPasswordError": "Please enter a password",
+  "@resetPasswordNewPasswordError": {
+    "description": "New password required error"
+  },
+
+  "resetPasswordLengthError": "Password must be at least 8 characters",
+  "@resetPasswordLengthError": {
+    "description": "Password length validation error"
+  },
+
+  "resetPasswordNumberError": "Password must contain at least one number",
+  "@resetPasswordNumberError": {
+    "description": "Password number validation error"
+  },
+
+  "resetPasswordSpecialCharError": "Password must contain at least one special character",
+  "@resetPasswordSpecialCharError": {
+    "description": "Password special character validation error"
+  },
+
+  "resetPasswordConfirmError": "Please confirm your password",
+  "@resetPasswordConfirmError": {
+    "description": "Confirm password required error"
+  },
+
+  "resetPasswordMatchError": "Passwords do not match",
+  "@resetPasswordMatchError": {
+    "description": "Password mismatch validation error"
+  },
+
+  "forgotPasswordButton": "Forgot Password?",
+  "@forgotPasswordButton": {
+    "description": "Forgot password button on login screen"
   }
 }

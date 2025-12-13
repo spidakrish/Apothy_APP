@@ -469,6 +469,100 @@ class AuthRepositoryImpl implements AuthRepository {
     }
   }
 
+  @override
+  Future<Either<Failure, Unit>> sendPasswordResetCode({
+    required String email,
+  }) async {
+    try {
+      // Validate email format
+      if (!_isValidEmail(email)) {
+        return left(ValidationFailure.invalidEmail());
+      }
+
+      // Send reset code via remote datasource
+      await _remoteDatasource.sendPasswordResetCode(email);
+
+      return right(unit);
+    } on AuthException catch (e) {
+      return left(AuthFailure(message: e.message, code: e.code));
+    } catch (e) {
+      return left(AuthFailure.unknown(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, Unit>> verifyPasswordResetCode({
+    required String email,
+    required String code,
+  }) async {
+    try {
+      // Validate email format
+      if (!_isValidEmail(email)) {
+        return left(ValidationFailure.invalidEmail());
+      }
+
+      // Validate code format (6 digits)
+      if (code.length != 6 || !RegExp(r'^\d{6}$').hasMatch(code)) {
+        return left(ValidationFailure(
+          message: 'Code must be 6 digits',
+          code: 'invalid_code',
+        ));
+      }
+
+      // Verify code via remote datasource
+      await _remoteDatasource.verifyPasswordResetCode(
+        email: email,
+        code: code,
+      );
+
+      return right(unit);
+    } on AuthException catch (e) {
+      return left(AuthFailure(message: e.message, code: e.code));
+    } catch (e) {
+      return left(AuthFailure.unknown(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, Unit>> resetPassword({
+    required String email,
+    required String code,
+    required String newPassword,
+  }) async {
+    try {
+      // Validate email format
+      if (!_isValidEmail(email)) {
+        return left(ValidationFailure.invalidEmail());
+      }
+
+      // Validate code format
+      if (code.length != 6 || !RegExp(r'^\d{6}$').hasMatch(code)) {
+        return left(ValidationFailure(
+          message: 'Code must be 6 digits',
+          code: 'invalid_code',
+        ));
+      }
+
+      // Validate password strength
+      if (!_isValidPassword(newPassword)) {
+        return left(ValidationFailure.weakPassword());
+      }
+
+      // Reset password via remote datasource
+      await _remoteDatasource.resetPassword(
+        email: email,
+        code: code,
+        newPassword: newPassword,
+      );
+
+      return right(unit);
+    } on AuthException catch (e) {
+      return left(AuthFailure(message: e.message, code: e.code));
+    } catch (e) {
+      return left(AuthFailure.unknown(e.toString()));
+    }
+  }
+
   /// Saves authentication result to local storage
   Future<void> _saveAuthResult(AuthResult result) async {
     await Future.wait([

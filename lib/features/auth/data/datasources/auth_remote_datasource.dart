@@ -64,6 +64,22 @@ abstract class AuthRemoteDatasource {
   /// Deletes user account permanently
   /// Required for GDPR compliance and App Store requirements
   Future<void> deleteAccount(String accessToken);
+
+  /// Sends a password reset code to the user's email
+  Future<void> sendPasswordResetCode(String email);
+
+  /// Verifies the password reset code
+  Future<void> verifyPasswordResetCode({
+    required String email,
+    required String code,
+  });
+
+  /// Resets the password with the verified code
+  Future<void> resetPassword({
+    required String email,
+    required String code,
+    required String newPassword,
+  });
 }
 
 /// Result of an authentication operation
@@ -109,6 +125,9 @@ class AuthRemoteDatasourceImpl implements AuthRemoteDatasource {
   static const String _deleteAccountPath = '/auth/delete';
   static const String _userPath = '/user';
   static const String _updateProfilePath = '/user/profile';
+  static const String _passwordResetPath = '/auth/password/reset/send';
+  static const String _passwordResetVerifyPath = '/auth/password/reset/verify';
+  static const String _passwordResetConfirmPath = '/auth/password/reset/confirm';
 
   @override
   Future<AuthResult> signInWithApple({
@@ -363,6 +382,120 @@ class AuthRemoteDatasourceImpl implements AuthRemoteDatasource {
         expiresAt: now.add(const Duration(hours: 1)),
       ),
     );
+  }
+
+  @override
+  Future<void> sendPasswordResetCode(String email) async {
+    if (useMock) {
+      // Mock: Simulate sending password reset code
+      await Future.delayed(const Duration(seconds: 1));
+
+      // Simulate email validation
+      if (!email.contains('@')) {
+        throw const AuthException(
+          'Invalid email address',
+          code: 'invalid_email',
+        );
+      }
+
+      // In mock mode, we just log the code (in production, backend sends email)
+      final mockCode = '123456';
+      print('Mock password reset code for $email: $mockCode');
+      return;
+    }
+
+    try {
+      await _dio.post(
+        _passwordResetPath,
+        data: {'email': email},
+      );
+    } on DioException catch (e) {
+      throw _handleDioError(e);
+    }
+  }
+
+  @override
+  Future<void> verifyPasswordResetCode({
+    required String email,
+    required String code,
+  }) async {
+    if (useMock) {
+      // Mock: Validate code format
+      await Future.delayed(const Duration(milliseconds: 500));
+
+      if (code.length != 6) {
+        throw const AuthException(
+          'Code must be 6 digits',
+          code: 'invalid_code',
+        );
+      }
+
+      // Mock: Accept code '123456' for testing
+      if (code != '123456') {
+        throw const AuthException(
+          'Invalid or expired code',
+          code: 'invalid_code',
+        );
+      }
+
+      return;
+    }
+
+    try {
+      await _dio.post(
+        _passwordResetVerifyPath,
+        data: {
+          'email': email,
+          'code': code,
+        },
+      );
+    } on DioException catch (e) {
+      throw _handleDioError(e);
+    }
+  }
+
+  @override
+  Future<void> resetPassword({
+    required String email,
+    required String code,
+    required String newPassword,
+  }) async {
+    if (useMock) {
+      // Mock: Simulate password reset
+      await Future.delayed(const Duration(seconds: 1));
+
+      // Validate password strength
+      if (newPassword.length < 8) {
+        throw const AuthException(
+          'Password must be at least 8 characters',
+          code: 'weak_password',
+        );
+      }
+
+      // Mock: Verify code again
+      if (code != '123456') {
+        throw const AuthException(
+          'Invalid or expired code',
+          code: 'invalid_code',
+        );
+      }
+
+      print('Mock password reset successful for $email');
+      return;
+    }
+
+    try {
+      await _dio.post(
+        _passwordResetConfirmPath,
+        data: {
+          'email': email,
+          'code': code,
+          'new_password': newPassword,
+        },
+      );
+    } on DioException catch (e) {
+      throw _handleDioError(e);
+    }
   }
 
   /// Handles Dio errors and converts to AuthException

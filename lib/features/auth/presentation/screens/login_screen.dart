@@ -282,7 +282,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
             alignment: Alignment.centerRight,
             child: TextButton(
               onPressed: isLoading ? null : () {
-                // TODO: Implement forgot password
+                context.push('/forgot-password');
               },
               child: Text(
                 'Forgot Password?',
