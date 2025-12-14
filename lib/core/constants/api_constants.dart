@@ -26,6 +26,10 @@ class ApiConstants {
   /// Use: $chats/$chatId
   static String chat(String chatId) => '/chats/$chatId';
 
+  /// Mobile app chat endpoint for sending messages with streaming response
+  /// POST: Send message and get Server-Sent Events stream
+  static const String mobileChatsEndpoint = '/mobile/chats';
+
   /// Proactive reachout
   static String proactiveReachout(String chatId) => '/chats/proactive/$chatId';
 

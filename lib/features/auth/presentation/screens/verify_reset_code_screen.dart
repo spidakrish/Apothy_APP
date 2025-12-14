@@ -11,10 +11,7 @@ import '../providers/auth_providers.dart';
 
 /// Screen for verifying reset code and setting new password
 class VerifyResetCodeScreen extends ConsumerStatefulWidget {
-  const VerifyResetCodeScreen({
-    super.key,
-    required this.email,
-  });
+  const VerifyResetCodeScreen({super.key, required this.email});
 
   final String email;
 
@@ -46,18 +43,16 @@ class _VerifyResetCodeScreenState extends ConsumerState<VerifyResetCodeScreen> {
     setState(() => _isLoading = true);
 
     // First verify the code
-    final verifyResult =
-        await ref.read(authRepositoryProvider).verifyPasswordResetCode(
-              email: widget.email,
-              code: _codeController.text.trim(),
-            );
+    final verifyResult = await ref
+        .read(authRepositoryProvider)
+        .verifyPasswordResetCode(
+          email: widget.email,
+          code: _codeController.text.trim(),
+        );
 
     if (!mounted) return;
 
-    final verifyFailure = verifyResult.fold(
-      (failure) => failure,
-      (_) => null,
-    );
+    final verifyFailure = verifyResult.fold((failure) => failure, (_) => null);
 
     if (verifyFailure != null) {
       setState(() => _isLoading = false);
@@ -72,7 +67,9 @@ class _VerifyResetCodeScreenState extends ConsumerState<VerifyResetCodeScreen> {
     }
 
     // If verification successful, reset the password
-    final resetResult = await ref.read(authRepositoryProvider).resetPassword(
+    final resetResult = await ref
+        .read(authRepositoryProvider)
+        .resetPassword(
           email: widget.email,
           code: _codeController.text.trim(),
           newPassword: _passwordController.text,
@@ -97,7 +94,9 @@ class _VerifyResetCodeScreenState extends ConsumerState<VerifyResetCodeScreen> {
         // Success - show success message and navigate to login
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
-            content: Text('Password reset successful! Please login with your new password.'),
+            content: Text(
+              'Password reset successful! Please login with your new password.',
+            ),
             backgroundColor: AppColors.success,
             behavior: SnackBarBehavior.floating,
           ),
@@ -129,7 +128,10 @@ class _VerifyResetCodeScreenState extends ConsumerState<VerifyResetCodeScreen> {
                   Align(
                     alignment: Alignment.centerLeft,
                     child: IconButton(
-                      icon: const Icon(Icons.arrow_back, color: AppColors.textPrimary),
+                      icon: const Icon(
+                        Icons.arrow_back,
+                        color: AppColors.textPrimary,
+                      ),
                       onPressed: () => context.pop(),
                     ),
                   ),
@@ -145,7 +147,7 @@ class _VerifyResetCodeScreenState extends ConsumerState<VerifyResetCodeScreen> {
                   AppTextField(
                     controller: _codeController,
                     label: 'Verification Code',
-                    hint: 'Enter 6-digit code',
+                    hintText: 'Enter 6-digit code',
                     keyboardType: TextInputType.number,
                     textInputAction: TextInputAction.next,
                     enabled: !_isLoading,
@@ -169,7 +171,7 @@ class _VerifyResetCodeScreenState extends ConsumerState<VerifyResetCodeScreen> {
                   AppTextField(
                     controller: _passwordController,
                     label: 'New Password',
-                    hint: 'Enter new password',
+                    hintText: 'Enter new password',
                     obscureText: !_isPasswordVisible,
                     textInputAction: TextInputAction.next,
                     enabled: !_isLoading,
@@ -209,7 +211,7 @@ class _VerifyResetCodeScreenState extends ConsumerState<VerifyResetCodeScreen> {
                   AppTextField(
                     controller: _confirmPasswordController,
                     label: 'Confirm Password',
-                    hint: 'Re-enter new password',
+                    hintText: 'Re-enter new password',
                     obscureText: !_isConfirmPasswordVisible,
                     textInputAction: TextInputAction.done,
                     enabled: !_isLoading,
@@ -222,7 +224,8 @@ class _VerifyResetCodeScreenState extends ConsumerState<VerifyResetCodeScreen> {
                       ),
                       onPressed: () {
                         setState(() {
-                          _isConfirmPasswordVisible = !_isConfirmPasswordVisible;
+                          _isConfirmPasswordVisible =
+                              !_isConfirmPasswordVisible;
                         });
                       },
                     ),
@@ -235,16 +238,15 @@ class _VerifyResetCodeScreenState extends ConsumerState<VerifyResetCodeScreen> {
                       }
                       return null;
                     },
-                    onFieldSubmitted: (_) => _resetPassword(),
+                    onSubmitted: (_) => _resetPassword(),
                   ),
 
                   const SizedBox(height: 32),
 
-                  // Reset password button
+                  // Reset button
                   AppButton(
                     onPressed: _isLoading ? null : _resetPassword,
-                    isLoading: _isLoading,
-                    child: const Text('Reset Password'),
+                    label: 'Reset Password',
                   ),
 
                   const SizedBox(height: 24),
@@ -266,7 +268,7 @@ class _VerifyResetCodeScreenState extends ConsumerState<VerifyResetCodeScreen> {
       children: [
         Text(
           'Reset Password',
-          style: AppTypography.h1.copyWith(
+          style: AppTypography.displayLarge.copyWith(
             color: AppColors.textPrimary,
             fontWeight: FontWeight.bold,
           ),
@@ -288,18 +290,11 @@ class _VerifyResetCodeScreenState extends ConsumerState<VerifyResetCodeScreen> {
       decoration: BoxDecoration(
         color: AppColors.primary.withOpacity(0.1),
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(
-          color: AppColors.primary.withOpacity(0.3),
-          width: 1,
-        ),
+        border: Border.all(color: AppColors.primary.withOpacity(0.3), width: 1),
       ),
       child: Row(
         children: [
-          Icon(
-            Icons.info_outline,
-            color: AppColors.primary,
-            size: 20,
-          ),
+          Icon(Icons.info_outline, color: AppColors.primary, size: 20),
           const SizedBox(width: 12),
           Expanded(
             child: Text(

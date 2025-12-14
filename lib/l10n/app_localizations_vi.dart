@@ -401,4 +401,145 @@ class AppLocalizationsVi extends AppLocalizations {
   @override
   String get settingsSignOutConfirmMessage =>
       'Bạn có chắc chắn muốn đăng xuất?';
+
+  @override
+  String get subscriptionTitle => 'Upgrade to Premium';
+
+  @override
+  String get subscriptionPlusTitle => 'Plus';
+
+  @override
+  String get subscriptionProTitle => 'Pro';
+
+  @override
+  String get subscriptionFreeTitle => 'Free';
+
+  @override
+  String get subscriptionMonthly => 'per month';
+
+  @override
+  String get subscriptionYearly => 'per year';
+
+  @override
+  String get subscriptionRestorePurchases => 'Restore Purchases';
+
+  @override
+  String get subscriptionManage => 'Manage Subscription';
+
+  @override
+  String get subscriptionUpgrade => 'Upgrade Now';
+
+  @override
+  String get subscriptionLimitReached => 'Monthly limit reached';
+
+  @override
+  String get subscriptionLimitMessage =>
+      'You\'ve used all 5 free emotion challenges this month. Upgrade to Plus for unlimited access and unlock all premium features!';
+
+  @override
+  String get settingsSubscription => 'Subscription';
+
+  @override
+  String get settingsManageSubscription => 'Manage Subscription';
+
+  @override
+  String get subscriptionActive => 'Active';
+
+  @override
+  String get subscriptionExpired => 'Expired';
+
+  @override
+  String get subscriptionCancelled => 'Cancelled';
+
+  @override
+  String get subscriptionTrial => 'Trial';
+
+  @override
+  String get subscriptionGracePeriod => 'Grace Period';
+
+  @override
+  String get forgotPasswordTitle => 'Forgot Password?';
+
+  @override
+  String get forgotPasswordDescription =>
+      'Enter your email address and we\'ll send you a code to reset your password.';
+
+  @override
+  String get forgotPasswordEmailLabel => 'Email';
+
+  @override
+  String get forgotPasswordEmailHint => 'Enter your email address';
+
+  @override
+  String get forgotPasswordSendButton => 'Send Reset Code';
+
+  @override
+  String get forgotPasswordInfoMock =>
+      'In mock mode, the reset code is: 123456';
+
+  @override
+  String get resetPasswordTitle => 'Reset Password';
+
+  @override
+  String resetPasswordDescription(String email) {
+    return 'Enter the verification code sent to $email and your new password.';
+  }
+
+  @override
+  String get resetPasswordCodeLabel => 'Verification Code';
+
+  @override
+  String get resetPasswordCodeHint => 'Enter 6-digit code';
+
+  @override
+  String get resetPasswordNewPasswordLabel => 'New Password';
+
+  @override
+  String get resetPasswordNewPasswordHint => 'Enter new password';
+
+  @override
+  String get resetPasswordConfirmLabel => 'Confirm Password';
+
+  @override
+  String get resetPasswordConfirmHint => 'Re-enter new password';
+
+  @override
+  String get resetPasswordButton => 'Reset Password';
+
+  @override
+  String get resetPasswordSuccess =>
+      'Password reset successful! Please login with your new password.';
+
+  @override
+  String get resetPasswordCodeError => 'Please enter the verification code';
+
+  @override
+  String get resetPasswordCodeLengthError => 'Code must be 6 digits';
+
+  @override
+  String get resetPasswordCodeFormatError => 'Code must contain only numbers';
+
+  @override
+  String get resetPasswordNewPasswordError => 'Please enter a password';
+
+  @override
+  String get resetPasswordLengthError =>
+      'Password must be at least 8 characters';
+
+  @override
+  String get resetPasswordNumberError =>
+      'Password must contain at least one number';
+
+  @override
+  String get resetPasswordSpecialCharError =>
+      'Password must contain at least one special character';
+
+  @override
+  String get resetPasswordConfirmError => 'Please confirm your password';
+
+  @override
+  String get resetPasswordMatchError => 'Passwords do not match';
+
+  @override
+  String get forgotPasswordButton => 'Forgot Password?';
 }

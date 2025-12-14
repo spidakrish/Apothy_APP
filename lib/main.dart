@@ -38,9 +38,7 @@ void main() async {
   // Initialize RevenueCat for subscriptions
   // Note: API key should be configured via environment variable for production
   if (RevenueCatConfig.isConfigured) {
-    await Purchases.configure(
-      PurchasesConfiguration(RevenueCatConfig.apiKey),
-    );
+    await Purchases.configure(PurchasesConfiguration(RevenueCatConfig.apiKey));
     debugPrint('RevenueCat initialized successfully');
   } else {
     debugPrint(
@@ -83,7 +81,6 @@ class ApothyApp extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final router = ref.watch(appRouterProvider);
     final textScaleFactor = ref.watch(textScaleProvider);
-    final locale = ref.watch(localeProvider).valueOrNull;
 
     return MaterialApp.router(
       title: 'Apothy',
@@ -106,16 +103,15 @@ class ApothyApp extends ConsumerWidget {
         Locale('th'), // Thai
         Locale('vi'), // Vietnamese
       ],
-      locale: locale, // User's selected locale (null = system default)
 
       routerConfig: router,
       builder: (context, child) {
         // Apply custom text scaling based on user preference
         final scale = textScaleFactor.valueOrNull ?? 1.0;
         return MediaQuery(
-          data: MediaQuery.of(context).copyWith(
-            textScaler: TextScaler.linear(scale),
-          ),
+          data: MediaQuery.of(
+            context,
+          ).copyWith(textScaler: TextScaler.linear(scale)),
           child: child ?? const SizedBox.shrink(),
         );
       },

@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_typography.dart';
@@ -50,10 +51,12 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   Future<void> _signInWithEmail() async {
     if (!_formKey.currentState!.validate()) return;
 
-    await ref.read(authProvider.notifier).signInWithEmail(
-      email: _emailController.text.trim(),
-      password: _passwordController.text,
-    );
+    await ref
+        .read(authProvider.notifier)
+        .signInWithEmail(
+          email: _emailController.text.trim(),
+          password: _passwordController.text,
+        );
   }
 
   void _navigateToSignUp() {
@@ -281,9 +284,11 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
           Align(
             alignment: Alignment.centerRight,
             child: TextButton(
-              onPressed: isLoading ? null : () {
-                context.push('/forgot-password');
-              },
+              onPressed: isLoading
+                  ? null
+                  : () {
+                      GoRouter.of(context).go('/forgot-password');
+                    },
               child: Text(
                 'Forgot Password?',
                 style: AppTypography.bodySmall.copyWith(
@@ -367,10 +372,7 @@ class _SocialAuthButton extends StatelessWidget {
           elevation: 0,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
-            side: BorderSide(
-              color: AppColors.border,
-              width: 1,
-            ),
+            side: BorderSide(color: AppColors.border, width: 1),
           ),
         ),
         child: isLoading

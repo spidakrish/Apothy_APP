@@ -827,6 +827,270 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Are you sure you want to sign out?'**
   String get settingsSignOutConfirmMessage;
+
+  /// Subscription screen title
+  ///
+  /// In en, this message translates to:
+  /// **'Upgrade to Premium'**
+  String get subscriptionTitle;
+
+  /// Plus tier title
+  ///
+  /// In en, this message translates to:
+  /// **'Plus'**
+  String get subscriptionPlusTitle;
+
+  /// Pro tier title
+  ///
+  /// In en, this message translates to:
+  /// **'Pro'**
+  String get subscriptionProTitle;
+
+  /// Free tier title
+  ///
+  /// In en, this message translates to:
+  /// **'Free'**
+  String get subscriptionFreeTitle;
+
+  /// Monthly subscription period
+  ///
+  /// In en, this message translates to:
+  /// **'per month'**
+  String get subscriptionMonthly;
+
+  /// Yearly subscription period
+  ///
+  /// In en, this message translates to:
+  /// **'per year'**
+  String get subscriptionYearly;
+
+  /// Restore purchases button text
+  ///
+  /// In en, this message translates to:
+  /// **'Restore Purchases'**
+  String get subscriptionRestorePurchases;
+
+  /// Manage subscription button text
+  ///
+  /// In en, this message translates to:
+  /// **'Manage Subscription'**
+  String get subscriptionManage;
+
+  /// Upgrade button text
+  ///
+  /// In en, this message translates to:
+  /// **'Upgrade Now'**
+  String get subscriptionUpgrade;
+
+  /// Limit reached title
+  ///
+  /// In en, this message translates to:
+  /// **'Monthly limit reached'**
+  String get subscriptionLimitReached;
+
+  /// Subscription limit message for emotion challenges
+  ///
+  /// In en, this message translates to:
+  /// **'You\'ve used all 5 free emotion challenges this month. Upgrade to Plus for unlimited access and unlock all premium features!'**
+  String get subscriptionLimitMessage;
+
+  /// Subscription settings section header
+  ///
+  /// In en, this message translates to:
+  /// **'Subscription'**
+  String get settingsSubscription;
+
+  /// Manage subscription settings tile
+  ///
+  /// In en, this message translates to:
+  /// **'Manage Subscription'**
+  String get settingsManageSubscription;
+
+  /// Active subscription status
+  ///
+  /// In en, this message translates to:
+  /// **'Active'**
+  String get subscriptionActive;
+
+  /// Expired subscription status
+  ///
+  /// In en, this message translates to:
+  /// **'Expired'**
+  String get subscriptionExpired;
+
+  /// Cancelled subscription status
+  ///
+  /// In en, this message translates to:
+  /// **'Cancelled'**
+  String get subscriptionCancelled;
+
+  /// Trial subscription status
+  ///
+  /// In en, this message translates to:
+  /// **'Trial'**
+  String get subscriptionTrial;
+
+  /// Grace period subscription status
+  ///
+  /// In en, this message translates to:
+  /// **'Grace Period'**
+  String get subscriptionGracePeriod;
+
+  /// Forgot password screen title
+  ///
+  /// In en, this message translates to:
+  /// **'Forgot Password?'**
+  String get forgotPasswordTitle;
+
+  /// Forgot password screen description
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your email address and we\'ll send you a code to reset your password.'**
+  String get forgotPasswordDescription;
+
+  /// Email input label on forgot password screen
+  ///
+  /// In en, this message translates to:
+  /// **'Email'**
+  String get forgotPasswordEmailLabel;
+
+  /// Email input hint on forgot password screen
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your email address'**
+  String get forgotPasswordEmailHint;
+
+  /// Send reset code button text
+  ///
+  /// In en, this message translates to:
+  /// **'Send Reset Code'**
+  String get forgotPasswordSendButton;
+
+  /// Info message about mock reset code
+  ///
+  /// In en, this message translates to:
+  /// **'In mock mode, the reset code is: 123456'**
+  String get forgotPasswordInfoMock;
+
+  /// Reset password screen title
+  ///
+  /// In en, this message translates to:
+  /// **'Reset Password'**
+  String get resetPasswordTitle;
+
+  /// Reset password screen description
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the verification code sent to {email} and your new password.'**
+  String resetPasswordDescription(String email);
+
+  /// Verification code input label
+  ///
+  /// In en, this message translates to:
+  /// **'Verification Code'**
+  String get resetPasswordCodeLabel;
+
+  /// Verification code input hint
+  ///
+  /// In en, this message translates to:
+  /// **'Enter 6-digit code'**
+  String get resetPasswordCodeHint;
+
+  /// New password input label
+  ///
+  /// In en, this message translates to:
+  /// **'New Password'**
+  String get resetPasswordNewPasswordLabel;
+
+  /// New password input hint
+  ///
+  /// In en, this message translates to:
+  /// **'Enter new password'**
+  String get resetPasswordNewPasswordHint;
+
+  /// Confirm password input label
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm Password'**
+  String get resetPasswordConfirmLabel;
+
+  /// Confirm password input hint
+  ///
+  /// In en, this message translates to:
+  /// **'Re-enter new password'**
+  String get resetPasswordConfirmHint;
+
+  /// Reset password button text
+  ///
+  /// In en, this message translates to:
+  /// **'Reset Password'**
+  String get resetPasswordButton;
+
+  /// Password reset success message
+  ///
+  /// In en, this message translates to:
+  /// **'Password reset successful! Please login with your new password.'**
+  String get resetPasswordSuccess;
+
+  /// Verification code required error
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter the verification code'**
+  String get resetPasswordCodeError;
+
+  /// Code length validation error
+  ///
+  /// In en, this message translates to:
+  /// **'Code must be 6 digits'**
+  String get resetPasswordCodeLengthError;
+
+  /// Code format validation error
+  ///
+  /// In en, this message translates to:
+  /// **'Code must contain only numbers'**
+  String get resetPasswordCodeFormatError;
+
+  /// New password required error
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a password'**
+  String get resetPasswordNewPasswordError;
+
+  /// Password length validation error
+  ///
+  /// In en, this message translates to:
+  /// **'Password must be at least 8 characters'**
+  String get resetPasswordLengthError;
+
+  /// Password number validation error
+  ///
+  /// In en, this message translates to:
+  /// **'Password must contain at least one number'**
+  String get resetPasswordNumberError;
+
+  /// Password special character validation error
+  ///
+  /// In en, this message translates to:
+  /// **'Password must contain at least one special character'**
+  String get resetPasswordSpecialCharError;
+
+  /// Confirm password required error
+  ///
+  /// In en, this message translates to:
+  /// **'Please confirm your password'**
+  String get resetPasswordConfirmError;
+
+  /// Password mismatch validation error
+  ///
+  /// In en, this message translates to:
+  /// **'Passwords do not match'**
+  String get resetPasswordMatchError;
+
+  /// Forgot password button on login screen
+  ///
+  /// In en, this message translates to:
+  /// **'Forgot Password?'**
+  String get forgotPasswordButton;
 }
 
 class _AppLocalizationsDelegate

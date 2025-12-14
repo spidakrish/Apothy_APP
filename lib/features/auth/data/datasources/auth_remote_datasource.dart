@@ -13,7 +13,8 @@ class AuthException implements Exception {
   final String? code;
 
   @override
-  String toString() => 'AuthException: $message${code != null ? ' ($code)' : ''}';
+  String toString() =>
+      'AuthException: $message${code != null ? ' ($code)' : ''}';
 }
 
 /// Remote data source for authentication API calls
@@ -84,10 +85,7 @@ abstract class AuthRemoteDatasource {
 
 /// Result of an authentication operation
 class AuthResult {
-  const AuthResult({
-    required this.user,
-    required this.tokens,
-  });
+  const AuthResult({required this.user, required this.tokens});
 
   final UserModel user;
   final AuthTokensModel tokens;
@@ -101,16 +99,22 @@ class AuthResult {
 class AuthRemoteDatasourceImpl implements AuthRemoteDatasource {
   AuthRemoteDatasourceImpl({
     Dio? dio,
-    this.useMock = true, // Default to mock until backend is ready
-  }) : _dio = dio ?? Dio(BaseOptions(
-    baseUrl: ApiConstants.baseUrl,
-    connectTimeout: Duration(seconds: ApiConstants.connectionTimeout),
-    receiveTimeout: Duration(seconds: ApiConstants.receiveTimeout),
-    headers: {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json',
-    },
-  ));
+    this.useMock = false, // Using real authentication now
+  }) : _dio =
+           dio ??
+           Dio(
+             BaseOptions(
+               baseUrl: ApiConstants.baseUrl,
+               connectTimeout: Duration(
+                 seconds: ApiConstants.connectionTimeout,
+               ),
+               receiveTimeout: Duration(seconds: ApiConstants.receiveTimeout),
+               headers: {
+                 'Content-Type': 'application/json',
+                 'Accept': 'application/json',
+               },
+             ),
+           );
 
   final Dio _dio;
   final bool useMock;
@@ -127,7 +131,8 @@ class AuthRemoteDatasourceImpl implements AuthRemoteDatasource {
   static const String _updateProfilePath = '/user/profile';
   static const String _passwordResetPath = '/auth/password/reset/send';
   static const String _passwordResetVerifyPath = '/auth/password/reset/verify';
-  static const String _passwordResetConfirmPath = '/auth/password/reset/confirm';
+  static const String _passwordResetConfirmPath =
+      '/auth/password/reset/confirm';
 
   @override
   Future<AuthResult> signInWithApple({
@@ -137,7 +142,11 @@ class AuthRemoteDatasourceImpl implements AuthRemoteDatasource {
     String? fullName,
   }) async {
     if (useMock) {
-      return _mockAuthResult(AuthProvider.apple, email: email, displayName: fullName);
+      return _mockAuthResult(
+        AuthProvider.apple,
+        email: email,
+        displayName: fullName,
+      );
     }
 
     try {
@@ -168,10 +177,7 @@ class AuthRemoteDatasourceImpl implements AuthRemoteDatasource {
     try {
       final response = await _dio.post(
         _googleSignInPath,
-        data: {
-          'id_token': idToken,
-          'access_token': accessToken,
-        },
+        data: {'id_token': idToken, 'access_token': accessToken},
       );
       return _parseAuthResult(response.data);
     } on DioException catch (e) {
@@ -191,10 +197,7 @@ class AuthRemoteDatasourceImpl implements AuthRemoteDatasource {
     try {
       final response = await _dio.post(
         _emailSignInPath,
-        data: {
-          'email': email,
-          'password': password,
-        },
+        data: {'email': email, 'password': password},
       );
       return _parseAuthResult(response.data);
     } on DioException catch (e) {
@@ -235,7 +238,8 @@ class AuthRemoteDatasourceImpl implements AuthRemoteDatasource {
   Future<AuthTokensModel> refreshToken(String refreshToken) async {
     if (useMock) {
       return AuthTokensModel(
-        accessToken: 'mock_refreshed_access_token_${DateTime.now().millisecondsSinceEpoch}',
+        accessToken:
+            'mock_refreshed_access_token_${DateTime.now().millisecondsSinceEpoch}',
         refreshToken: refreshToken,
         expiresAt: DateTime.now().add(const Duration(hours: 1)),
       );
@@ -244,9 +248,7 @@ class AuthRemoteDatasourceImpl implements AuthRemoteDatasource {
     try {
       final response = await _dio.post(
         _refreshTokenPath,
-        data: {
-          'refresh_token': refreshToken,
-        },
+        data: {'refresh_token': refreshToken},
       );
       return AuthTokensModel.fromJson(response.data);
     } on DioException catch (e) {
@@ -263,9 +265,7 @@ class AuthRemoteDatasourceImpl implements AuthRemoteDatasource {
     try {
       await _dio.post(
         _signOutPath,
-        options: Options(
-          headers: {'Authorization': 'Bearer $accessToken'},
-        ),
+        options: Options(headers: {'Authorization': 'Bearer $accessToken'}),
       );
     } on DioException catch (e) {
       // Log but don't throw - logout should succeed locally even if backend fails
@@ -288,9 +288,7 @@ class AuthRemoteDatasourceImpl implements AuthRemoteDatasource {
     try {
       final response = await _dio.get(
         _userPath,
-        options: Options(
-          headers: {'Authorization': 'Bearer $accessToken'},
-        ),
+        options: Options(headers: {'Authorization': 'Bearer $accessToken'}),
       );
       return UserModel.fromJson(response.data);
     } on DioException catch (e) {
@@ -322,9 +320,7 @@ class AuthRemoteDatasourceImpl implements AuthRemoteDatasource {
           if (displayName != null) 'display_name': displayName,
           if (photoUrl != null) 'photo_url': photoUrl,
         },
-        options: Options(
-          headers: {'Authorization': 'Bearer $accessToken'},
-        ),
+        options: Options(headers: {'Authorization': 'Bearer $accessToken'}),
       );
       return UserModel.fromJson(response.data);
     } on DioException catch (e) {
@@ -342,9 +338,7 @@ class AuthRemoteDatasourceImpl implements AuthRemoteDatasource {
     try {
       await _dio.delete(
         _deleteAccountPath,
-        options: Options(
-          headers: {'Authorization': 'Bearer $accessToken'},
-        ),
+        options: Options(headers: {'Authorization': 'Bearer $accessToken'}),
       );
     } on DioException catch (e) {
       throw _handleDioError(e);
@@ -405,10 +399,7 @@ class AuthRemoteDatasourceImpl implements AuthRemoteDatasource {
     }
 
     try {
-      await _dio.post(
-        _passwordResetPath,
-        data: {'email': email},
-      );
+      await _dio.post(_passwordResetPath, data: {'email': email});
     } on DioException catch (e) {
       throw _handleDioError(e);
     }
@@ -444,10 +435,7 @@ class AuthRemoteDatasourceImpl implements AuthRemoteDatasource {
     try {
       await _dio.post(
         _passwordResetVerifyPath,
-        data: {
-          'email': email,
-          'code': code,
-        },
+        data: {'email': email, 'code': code},
       );
     } on DioException catch (e) {
       throw _handleDioError(e);
@@ -487,11 +475,7 @@ class AuthRemoteDatasourceImpl implements AuthRemoteDatasource {
     try {
       await _dio.post(
         _passwordResetConfirmPath,
-        data: {
-          'email': email,
-          'code': code,
-          'new_password': newPassword,
-        },
+        data: {'email': email, 'code': code, 'new_password': newPassword},
       );
     } on DioException catch (e) {
       throw _handleDioError(e);
@@ -553,10 +537,7 @@ class AuthRemoteDatasourceImpl implements AuthRemoteDatasource {
           code: 'unknown',
         );
       case DioExceptionType.cancel:
-        return const AuthException(
-          'Request was cancelled',
-          code: 'cancelled',
-        );
+        return const AuthException('Request was cancelled', code: 'cancelled');
       default:
         return AuthException(
           e.message ?? 'An unexpected error occurred',

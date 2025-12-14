@@ -34,9 +34,9 @@ class _ForgotPasswordScreenState extends ConsumerState<ForgotPasswordScreen> {
 
     setState(() => _isLoading = true);
 
-    final result = await ref.read(authRepositoryProvider).sendPasswordResetCode(
-          email: _emailController.text.trim(),
-        );
+    final result = await ref
+        .read(authRepositoryProvider)
+        .sendPasswordResetCode(email: _emailController.text.trim());
 
     if (!mounted) return;
 
@@ -55,10 +55,7 @@ class _ForgotPasswordScreenState extends ConsumerState<ForgotPasswordScreen> {
       },
       (_) {
         // Success - navigate to verification screen
-        context.push(
-          '/verify-reset-code',
-          extra: _emailController.text.trim(),
-        );
+        context.push('/verify-reset-code', extra: _emailController.text.trim());
       },
     );
   }
@@ -83,7 +80,10 @@ class _ForgotPasswordScreenState extends ConsumerState<ForgotPasswordScreen> {
                   Align(
                     alignment: Alignment.centerLeft,
                     child: IconButton(
-                      icon: const Icon(Icons.arrow_back, color: AppColors.textPrimary),
+                      icon: const Icon(
+                        Icons.arrow_back,
+                        color: AppColors.textPrimary,
+                      ),
                       onPressed: () => context.pop(),
                     ),
                   ),
@@ -99,7 +99,7 @@ class _ForgotPasswordScreenState extends ConsumerState<ForgotPasswordScreen> {
                   AppTextField(
                     controller: _emailController,
                     label: 'Email',
-                    hint: 'Enter your email address',
+                    hintText: 'Enter your email address',
                     keyboardType: TextInputType.emailAddress,
                     textInputAction: TextInputAction.done,
                     enabled: !_isLoading,
@@ -112,7 +112,7 @@ class _ForgotPasswordScreenState extends ConsumerState<ForgotPasswordScreen> {
                       }
                       return null;
                     },
-                    onFieldSubmitted: (_) => _sendResetCode(),
+                    onSubmitted: (_) => _sendResetCode(),
                   ),
 
                   const SizedBox(height: 32),
@@ -120,8 +120,7 @@ class _ForgotPasswordScreenState extends ConsumerState<ForgotPasswordScreen> {
                   // Send code button
                   AppButton(
                     onPressed: _isLoading ? null : _sendResetCode,
-                    isLoading: _isLoading,
-                    child: const Text('Send Reset Code'),
+                    label: 'Send Reset Code',
                   ),
 
                   const SizedBox(height: 24),
@@ -143,7 +142,7 @@ class _ForgotPasswordScreenState extends ConsumerState<ForgotPasswordScreen> {
       children: [
         Text(
           'Forgot Password?',
-          style: AppTypography.h1.copyWith(
+          style: AppTypography.displayLarge.copyWith(
             color: AppColors.textPrimary,
             fontWeight: FontWeight.bold,
           ),
@@ -165,18 +164,11 @@ class _ForgotPasswordScreenState extends ConsumerState<ForgotPasswordScreen> {
       decoration: BoxDecoration(
         color: AppColors.primary.withOpacity(0.1),
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(
-          color: AppColors.primary.withOpacity(0.3),
-          width: 1,
-        ),
+        border: Border.all(color: AppColors.primary.withOpacity(0.3), width: 1),
       ),
       child: Row(
         children: [
-          Icon(
-            Icons.info_outline,
-            color: AppColors.primary,
-            size: 20,
-          ),
+          Icon(Icons.info_outline, color: AppColors.primary, size: 20),
           const SizedBox(width: 12),
           Expanded(
             child: Text(

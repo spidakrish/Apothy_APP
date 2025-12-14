@@ -100,7 +100,8 @@ class _MirrorIntroScreenState extends ConsumerState<MirrorIntroScreen>
     return mirrorIntroStatusAsync.when(
       data: (hasCompleted) => _buildContent(hasCompleted),
       loading: () => _buildLoadingState(),
-      error: (_, __) => _buildContent(false), // Default to no skip button on error
+      error: (_, __) =>
+          _buildContent(false), // Default to no skip button on error
     );
   }
 
@@ -209,9 +210,7 @@ class _MirrorIntroScreenState extends ConsumerState<MirrorIntroScreen>
           ),
           child: Text(
             buttonText,
-            style: AppTypography.labelLarge.copyWith(
-              color: Colors.white,
-            ),
+            style: AppTypography.labelLarge.copyWith(color: Colors.white),
           ),
         ),
       ),
@@ -226,17 +225,19 @@ class _MirrorIntroScreenState extends ConsumerState<MirrorIntroScreen>
         children: [
           // Icon container with animation
           FadeTransition(
-            opacity: Interval(
-              0.0,
-              0.4,
-              curve: Curves.easeOut,
-            ).animate(_entranceController),
+            opacity: Tween<double>(begin: 0, end: 1).animate(
+              CurvedAnimation(
+                parent: _entranceController,
+                curve: const Interval(0.0, 0.4, curve: Curves.easeOut),
+              ),
+            ),
             child: ScaleTransition(
-              scale: Interval(
-                0.0,
-                0.4,
-                curve: Curves.easeOut,
-              ).animate(_entranceController),
+              scale: Tween<double>(begin: 0.5, end: 1).animate(
+                CurvedAnimation(
+                  parent: _entranceController,
+                  curve: const Interval(0.0, 0.4, curve: Curves.easeOut),
+                ),
+              ),
               child: _buildIconContainer(page.icon),
             ),
           ),
@@ -245,21 +246,23 @@ class _MirrorIntroScreenState extends ConsumerState<MirrorIntroScreen>
 
           // Title with animation
           FadeTransition(
-            opacity: Interval(
-              0.15,
-              0.5,
-              curve: Curves.easeOut,
-            ).animate(_entranceController),
-            child: SlideTransition(
-              position: Tween<Offset>(
-                begin: const Offset(0, 0.3),
-                end: Offset.zero,
-              ).animate(
-                CurvedAnimation(
-                  parent: _entranceController,
-                  curve: const Interval(0.15, 0.5, curve: Curves.easeOut),
-                ),
+            opacity: Tween<double>(begin: 0, end: 1).animate(
+              CurvedAnimation(
+                parent: _entranceController,
+                curve: const Interval(0.15, 0.5, curve: Curves.easeOut),
               ),
+            ),
+            child: SlideTransition(
+              position:
+                  Tween<Offset>(
+                    begin: const Offset(0, 0.3),
+                    end: Offset.zero,
+                  ).animate(
+                    CurvedAnimation(
+                      parent: _entranceController,
+                      curve: const Interval(0.15, 0.5, curve: Curves.easeOut),
+                    ),
+                  ),
               child: Text(
                 page.title,
                 style: AppTypography.displaySmall,
@@ -272,11 +275,12 @@ class _MirrorIntroScreenState extends ConsumerState<MirrorIntroScreen>
 
           // Description with animation
           FadeTransition(
-            opacity: Interval(
-              0.3,
-              0.6,
-              curve: Curves.easeOut,
-            ).animate(_entranceController),
+            opacity: Tween<double>(begin: 0, end: 1).animate(
+              CurvedAnimation(
+                parent: _entranceController,
+                curve: const Interval(0.3, 0.6, curve: Curves.easeOut),
+              ),
+            ),
             child: Text(
               page.description,
               style: AppTypography.bodyLarge.copyWith(
@@ -306,11 +310,7 @@ class _MirrorIntroScreenState extends ConsumerState<MirrorIntroScreen>
           ),
         ],
       ),
-      child: Icon(
-        icon,
-        size: 56,
-        color: Colors.white,
-      ),
+      child: Icon(icon, size: 56, color: Colors.white),
     );
   }
 

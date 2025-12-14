@@ -68,7 +68,7 @@
 
 	<!-- Google Sign-In Client ID (from GoogleService-Info.plist CLIENT_ID) -->
 	<key>GIDClientID</key>
-	<string>YOUR_IOS_CLIENT_ID.apps.googleusercontent.com</string>
+	<string>1034576992446-s8je27vn328j026f69agmpv8fdtg1k71.apps.googleusercontent.com</string>
 
 	<!-- URL Schemes for OAuth callbacks -->
 	<key>CFBundleURLTypes</key>
@@ -79,7 +79,7 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>com.googleusercontent.apps.YOUR_IOS_CLIENT_ID</string>
+				<string>com.googleusercontent.apps.1034576992446-s8je27vn328j026f69agmpv8fdtg1k71</string>
 			</array>
 		</dict>
 	</array>

@@ -208,10 +208,10 @@ class SubscriptionRepositoryImpl implements SubscriptionRepository {
       return Subscription(
         tier: SubscriptionTier.pro,
         status: _parseStatus(entitlement),
-        expiresAt: entitlement.expirationDate,
+        expiresAt: entitlement.expirationDate != null ? DateTime.parse(entitlement.expirationDate!) : null,
         willRenew: entitlement.willRenew,
         productId: entitlement.productIdentifier,
-        originalPurchaseDate: entitlement.originalPurchaseDate,
+        originalPurchaseDate: DateTime.parse(entitlement.originalPurchaseDate),
       );
     }
 
@@ -221,10 +221,10 @@ class SubscriptionRepositoryImpl implements SubscriptionRepository {
       return Subscription(
         tier: SubscriptionTier.plus,
         status: _parseStatus(entitlement),
-        expiresAt: entitlement.expirationDate,
+        expiresAt: entitlement.expirationDate != null ? DateTime.parse(entitlement.expirationDate!) : null,
         willRenew: entitlement.willRenew,
         productId: entitlement.productIdentifier,
-        originalPurchaseDate: entitlement.originalPurchaseDate,
+        originalPurchaseDate: DateTime.parse(entitlement.originalPurchaseDate),
       );
     }
 
@@ -251,7 +251,7 @@ class SubscriptionRepositoryImpl implements SubscriptionRepository {
 
     // Will not renew (cancelled but still active until expiration)
     if (entitlement.expirationDate != null &&
-        DateTime.now().isBefore(entitlement.expirationDate!)) {
+        DateTime.now().isBefore(DateTime.parse(entitlement.expirationDate!))) {
       return SubscriptionStatus.cancelled;
     }
 

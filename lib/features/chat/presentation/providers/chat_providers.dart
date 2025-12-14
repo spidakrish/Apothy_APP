@@ -5,6 +5,7 @@ import '../../../../core/error/failures.dart';
 import '../../../../core/services/ai_service.dart';
 import '../../../dashboard/presentation/providers/dashboard_providers.dart';
 import '../../data/datasources/chat_local_datasource.dart';
+import '../../data/datasources/chat_remote_datasource.dart';
 import '../../data/repositories/chat_repository_impl.dart';
 import '../../domain/entities/conversation.dart';
 import '../../domain/entities/message.dart';
@@ -18,6 +19,11 @@ import 'ai_providers.dart';
 /// Provider for ChatLocalDatasource
 final chatLocalDatasourceProvider = Provider<ChatLocalDatasource>((ref) {
   return ChatLocalDatasourceImpl();
+});
+
+/// Provider for ChatRemoteDatasource
+final chatRemoteDatasourceProvider = Provider<ChatRemoteDatasource>((ref) {
+  return ChatRemoteDatasourceImpl();
 });
 
 // =============================================================================
@@ -45,10 +51,8 @@ class ChatState {
   });
 
   /// Initial empty state
-  factory ChatState.initial() => ChatState(
-    currentConversation: Conversation.empty,
-    messages: const [],
-  );
+  factory ChatState.initial() =>
+      ChatState(currentConversation: Conversation.empty, messages: const []);
 
   /// The current active conversation
   final Conversation currentConversation;
@@ -117,7 +121,9 @@ class ChatNotifier extends AsyncNotifier<ChatState> {
 
     return conversationResult.fold(
       (failure) {
-        debugPrint('ChatNotifier: error loading conversation: ${failure.message}');
+        debugPrint(
+          'ChatNotifier: error loading conversation: ${failure.message}',
+        );
         return ChatState.initial().copyWith(failure: failure);
       },
       (conversation) async {
@@ -128,7 +134,9 @@ class ChatNotifier extends AsyncNotifier<ChatState> {
 
         return messagesResult.fold(
           (failure) {
-            debugPrint('ChatNotifier: error loading messages: ${failure.message}');
+            debugPrint(
+              'ChatNotifier: error loading messages: ${failure.message}',
+            );
             return ChatState(
               currentConversation: conversation,
               messages: const [],
@@ -157,7 +165,7 @@ class ChatNotifier extends AsyncNotifier<ChatState> {
     // Set sending state
     state = AsyncValue.data(currentState.copyWith(isSending: true));
 
-    // Send user message
+    // Send user message to local storage
     final result = await _repository.sendMessage(
       conversationId: currentState.currentConversation.id,
       content: content,
@@ -166,19 +174,20 @@ class ChatNotifier extends AsyncNotifier<ChatState> {
 
     result.fold(
       (failure) {
-        state = AsyncValue.data(currentState.copyWith(
-          isSending: false,
-          failure: failure,
-        ));
+        state = AsyncValue.data(
+          currentState.copyWith(isSending: false, failure: failure),
+        );
       },
       (message) {
         // Add message to list
         final updatedMessages = [...currentState.messages, message];
-        state = AsyncValue.data(currentState.copyWith(
-          messages: updatedMessages,
-          // Keep isSending true while waiting for AI response
-          isSending: true,
-        ));
+        state = AsyncValue.data(
+          currentState.copyWith(
+            messages: updatedMessages,
+            // Keep isSending true while waiting for AI response
+            isSending: true,
+          ),
+        );
 
         // Update conversation metadata
         _updateConversationMetadata(message);
@@ -186,14 +195,17 @@ class ChatNotifier extends AsyncNotifier<ChatState> {
         // Award XP for sending a message
         _awardXpForMessage();
 
-        // Request AI response
-        _getAIResponse(content, updatedMessages);
+        // Send to backend and handle streaming response
+        _sendToBackendAndHandleResponse(content, updatedMessages);
       },
     );
   }
 
   /// Gets AI response for the user's message
-  Future<void> _getAIResponse(String userMessage, List<Message> currentMessages) async {
+  Future<void> _getAIResponse(
+    String userMessage,
+    List<Message> currentMessages,
+  ) async {
     final currentState = state.valueOrNull;
     if (currentState == null) return;
 
@@ -203,10 +215,12 @@ class ChatNotifier extends AsyncNotifier<ChatState> {
 
     // Convert messages to AI format
     final conversationHistory = currentMessages
-        .map((m) => AIMessage(
-              role: m.isUser ? 'user' : 'assistant',
-              content: m.content,
-            ))
+        .map(
+          (m) => AIMessage(
+            role: m.isUser ? 'user' : 'assistant',
+            content: m.content,
+          ),
+        )
         .toList();
 
     debugPrint('ChatNotifier: Requesting AI response...');
@@ -225,10 +239,9 @@ class ChatNotifier extends AsyncNotifier<ChatState> {
         // Update state with failure but keep messages
         final updatedState = state.valueOrNull;
         if (updatedState != null) {
-          state = AsyncValue.data(updatedState.copyWith(
-            isSending: false,
-            failure: failure,
-          ));
+          state = AsyncValue.data(
+            updatedState.copyWith(isSending: false, failure: failure),
+          );
         }
       },
       (aiResponse) {
@@ -257,9 +270,9 @@ class ChatNotifier extends AsyncNotifier<ChatState> {
 
     await _repository.updateConversation(updatedConversation);
 
-    state = AsyncValue.data(currentState.copyWith(
-      currentConversation: updatedConversation,
-    ));
+    state = AsyncValue.data(
+      currentState.copyWith(currentConversation: updatedConversation),
+    );
   }
 
   /// Adds an assistant message (for AI responses)
@@ -275,19 +288,20 @@ class ChatNotifier extends AsyncNotifier<ChatState> {
 
     result.fold(
       (failure) {
-        state = AsyncValue.data(currentState.copyWith(
-          isSending: false,
-          failure: failure,
-        ));
+        state = AsyncValue.data(
+          currentState.copyWith(isSending: false, failure: failure),
+        );
       },
       (message) {
         // Get latest state to include any recent updates
         final latestState = state.valueOrNull ?? currentState;
         final updatedMessages = [...latestState.messages, message];
-        state = AsyncValue.data(latestState.copyWith(
-          messages: updatedMessages,
-          isSending: false, // Clear sending state after AI response
-        ));
+        state = AsyncValue.data(
+          latestState.copyWith(
+            messages: updatedMessages,
+            isSending: false, // Clear sending state after AI response
+          ),
+        );
         _updateConversationMetadata(message);
       },
     );
@@ -302,10 +316,8 @@ class ChatNotifier extends AsyncNotifier<ChatState> {
     state = AsyncValue.data(
       result.fold(
         (failure) => ChatState.initial().copyWith(failure: failure),
-        (conversation) => ChatState(
-          currentConversation: conversation,
-          messages: const [],
-        ),
+        (conversation) =>
+            ChatState(currentConversation: conversation, messages: const []),
       ),
     );
   }
@@ -314,7 +326,9 @@ class ChatNotifier extends AsyncNotifier<ChatState> {
   Future<void> loadConversation(String conversationId) async {
     state = const AsyncValue.loading();
 
-    final conversationResult = await _repository.getConversation(conversationId);
+    final conversationResult = await _repository.getConversation(
+      conversationId,
+    );
 
     final newState = await conversationResult.fold(
       (failure) async => ChatState.initial().copyWith(failure: failure),
@@ -335,10 +349,8 @@ class ChatNotifier extends AsyncNotifier<ChatState> {
             messages: const [],
             failure: failure,
           ),
-          (messages) => ChatState(
-            currentConversation: conversation,
-            messages: messages,
-          ),
+          (messages) =>
+              ChatState(currentConversation: conversation, messages: messages),
         );
       },
     );
@@ -371,6 +383,112 @@ class ChatNotifier extends AsyncNotifier<ChatState> {
     final currentState = state.valueOrNull;
     if (currentState != null && currentState.hasError) {
       state = AsyncValue.data(currentState.copyWith(failure: null));
+    }
+  }
+
+  /// Sends message to backend and handles streaming response
+  Future<void> _sendToBackendAndHandleResponse(
+    String content,
+    List<Message> updatedMessages,
+  ) async {
+    final currentState = state.valueOrNull;
+    if (currentState == null) return;
+
+    final remoteDatasource = ref.read(chatRemoteDatasourceProvider);
+
+    try {
+      final streamResult = await remoteDatasource.sendMessageAndStream(
+        chatId: currentState.currentConversation.id,
+        message: content,
+      );
+
+      await streamResult.fold(
+        (failure) async {
+          debugPrint('ChatNotifier: Backend send failed - ${failure.message}');
+          state = AsyncValue.data(
+            currentState.copyWith(
+              isSending: false,
+              failure: failure,
+              messages: updatedMessages,
+            ),
+          );
+        },
+        (stream) async {
+          await _handleBackendStream(stream, currentState, updatedMessages);
+        },
+      );
+    } catch (e) {
+      debugPrint('ChatNotifier: Error sending to backend: $e');
+      final failure = ChatFailure.unknown('Failed to send message');
+      state = AsyncValue.data(
+        currentState.copyWith(
+          isSending: false,
+          failure: failure,
+          messages: updatedMessages,
+        ),
+      );
+    }
+  }
+
+  /// Handles incoming streaming response from backend
+  Future<void> _handleBackendStream(
+    Stream<String> stream,
+    ChatState currentState,
+    List<Message> messageList,
+  ) async {
+    try {
+      final buffer = StringBuffer();
+
+      await stream
+          .listen(
+            (chunk) {
+              buffer.write(chunk);
+              debugPrint(
+                'ChatNotifier: Received chunk - ${chunk.length} bytes',
+              );
+            },
+            onError: (error) {
+              debugPrint('ChatNotifier: Stream error - $error');
+              final failure = ChatFailure.unknown(
+                'Stream error: ${error.toString()}',
+              );
+              state = AsyncValue.data(
+                currentState.copyWith(
+                  isSending: false,
+                  failure: failure,
+                  messages: messageList,
+                ),
+              );
+            },
+            onDone: () async {
+              final response = buffer.toString().trim();
+              debugPrint(
+                'ChatNotifier: Stream complete - response length: ${response.length}',
+              );
+
+              if (response.isNotEmpty) {
+                // Add AI response as a new message
+                await addAssistantMessage(response);
+              } else {
+                // Stream ended with no content
+                final latestState = state.valueOrNull ?? currentState;
+                state = AsyncValue.data(latestState.copyWith(isSending: false));
+              }
+            },
+          )
+          .asFuture();
+    } catch (e) {
+      debugPrint('ChatNotifier: Error handling stream: $e');
+      final failure = ChatFailure.unknown(
+        'Failed to process response: ${e.toString()}',
+      );
+      state = AsyncValue.data(
+        currentState.copyWith(
+          isSending: false,
+          failure: failure,
+          messages: messageList,
+        ),
+      );
     }
   }
 
